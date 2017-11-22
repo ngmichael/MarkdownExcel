@@ -22,6 +22,7 @@ public class Parser {
         }
     }
 
+    /*
     private
 
     private ArrayList<String[]> findTable(Stream<String> lines) {
@@ -29,6 +30,6 @@ public class Parser {
         for(String s: rawTableLines) {
 
         }
-    }
+    }*/
 
 }
