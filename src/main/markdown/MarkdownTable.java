@@ -1,6 +1,7 @@
 package main.markdown;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.Optional;
@@ -11,6 +12,7 @@ public class MarkdownTable {
     private String[][] elements;
     private ColumnType[] columnTypes;
     private int columnWidth;
+    private int rows, columns;
 
     /**
      * Creates an empty table instance.
@@ -19,6 +21,8 @@ public class MarkdownTable {
      * @param numberRows - The number of rows in this column
      */
     public MarkdownTable(int numberRows, int numberColumns) {
+        this.columns = numberColumns;
+        this.rows = numberRows;
         elements = new String[numberRows][numberColumns];
         columnTypes = new ColumnType[numberColumns];
         // Prefill table cells
@@ -78,6 +82,42 @@ public class MarkdownTable {
         }
 
         columnTypes[columnIndex] = type;
+    }
+
+    /**
+     * Updates the header row.
+     *
+     * @param values a variable amount of strings representing the new header values
+     */
+    public void setHeaderRow(String... values) {
+        for(int i = 0; i < Math.min(values.length, columns); i++) {
+            set(0, i, values[i]);
+        }
+    }
+
+    /**
+     * Appends a row to the bottom of the table
+     */
+    public void appendRow(){
+        rows++;
+        elements = Arrays.copyOf(elements, rows);
+        for (int i = 0; i < columns; i++) {
+            elements[rows-1][i] = "";
+        }
+    }
+
+    /**
+     * Appends a column to the right side of the table
+     */
+    public void appendColumn() {
+        columns++;
+        for(int i = 0; i < rows; i++) {
+            String[] column = elements[i];
+            elements[i] = Arrays.copyOf(column, columns);
+            for (int j = 0; j < rows; j++) {
+                elements[j][columns-1] = "";
+            }
+        }
     }
 
     /**
