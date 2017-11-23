@@ -30,7 +30,7 @@ import java.util.stream.Stream;
  * Additionally, this class provides the following static methods:
  *
  * static Optional<Table> fromLineStream(Stream<String> lines)
- *      -> attempts to parse the supplied Stream of Strigs into a Table instance
+ *      -> attempts to parse the supplied Stream of Strings into a Table instance
  *         and returns it on success. Otherwise an empty Optional will be returned.
  *
  *  @author Noah George Michael <noah.michael@mni.thm.de>
@@ -51,12 +51,12 @@ public class Table {
      */
     public Table(int numberRows, int numberColumns) {
         this.columns = numberColumns;
-        this.rows = numberRows;
-        elements = new String[numberRows][numberColumns];
-        columnTypes = new ColumnType[numberColumns];
+        this.rows = numberRows + 2;
+        elements = new String[rows][columns];
+        columnTypes = new ColumnType[columns];
         // Prefill table cells
-        for (int i = 0; i < numberRows; i++) {
-            elements[i] = new String[numberColumns];
+        for (int i = 0; i < rows; i++) {
+            elements[i] = new String[columns];
             Arrays.fill(elements[i], " ");
         }
         // Prefill formating array
@@ -72,11 +72,11 @@ public class Table {
      * @throws IllegalArgumentException if row or column index is out of bounds
      */
     public String get(int row, int column) throws IllegalArgumentException {
-        if (row < 0 || row >= elements.length)
+        if (row < 0 || row >= elements.length-2)
             throw new IllegalArgumentException("Row " + row + " is out of bounds!");
-        if (column < 0 || column >= elements[row].length)
+        if (column < 0 || column >= elements[row].length-2)
             throw new IllegalArgumentException("Column " + column + " is out of bounds!");
-        return elements[row][column];
+        return elements[row+2][column];
     }
 
     /**
@@ -87,12 +87,12 @@ public class Table {
      * @throws IllegalArgumentException if row or column index is out of bounds
      */
     public void set(int row, int column, String value) throws IllegalArgumentException {
-        if (row < 0 || row >= elements.length)
+        if (row < 0 || row >= elements.length-2)
             throw new IllegalArgumentException("Row " + row + " is out of bounds!");
-        if (column < 0 || column >= elements[row].length)
+        if (column < 0 || column >= elements[row].length-2)
             throw new IllegalArgumentException("Column " + column + " is out of bounds!");
         columnWidth = 2 + value.length();
-        elements[row][column] = value;
+        elements[row+2][column] = value;
     }
 
     /**
@@ -118,9 +118,7 @@ public class Table {
      * @param values a variable amount of strings representing the new header values
      */
     public void setHeaderRow(String... values) {
-        for(int i = 0; i < Math.min(values.length, columns); i++) {
-            set(0, i, values[i]);
-        }
+        System.arraycopy(values, 0, elements[0], 0, Math.min(values.length, columns));
     }
 
     /**
@@ -157,7 +155,7 @@ public class Table {
         String[][] newElements = new String[rows][columns];
         Iterator<String[]> oldElements = Arrays.asList(elements).iterator();
         for (int i = 0; i < rows; i++) {
-            if (i == index) {
+            if (i == index+2) {
                 newElements[i] = new String[columns];
                 Arrays.fill(newElements[i], " ");
             }
@@ -192,7 +190,7 @@ public class Table {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("\n");
 
         for (int row = 0; row < elements.length; row++) {
             for (int column = 0; column < elements[row].length; column++) {
@@ -229,6 +227,7 @@ public class Table {
                 }
             }
         }
+        sb.append("\n");
         return sb.toString();
     }
 
@@ -250,7 +249,7 @@ public class Table {
 
     public static Optional<Table> fromLineStream(Stream<String> lines) {
         int rows, columns;
-        // First, filter out all lines that don't contatin pipes, since they cant be part of a table
+        // First, filter out all lines that don't contain pipes, since they cant be part of a table
         List<String> usableLines = lines.filter(s -> s.contains("|")).collect(Collectors.toList());
 
         /* Secondly, there must be three consecutive lines like this to count as a table:
