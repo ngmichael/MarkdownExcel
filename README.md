@@ -9,6 +9,10 @@ Feature-Testing for Markdown parsing and editing
 
 ### In progress:
 
+    -
+    
+### Needs testing:
+
     - removing rows / columns
 
 ### Done:

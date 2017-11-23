@@ -15,6 +15,8 @@ import java.util.stream.Stream;
  * This class represents a MarkdownTable as defined
  * in the GitHub-Flavored Markdown specification.
  *
+ * THIS CODE IS INTENTIONALLY NOT USING EXCEPTION HANDLING IN MOST CASES CURRENTLY!
+ *
  * Instances of this class provide the following methods:
  *
  * String get(int row, int column) ->               returns the value of a cell
@@ -182,6 +184,34 @@ public class Table {
             types[i] = i == index ? type : typeIter.next();
         }
         columnTypes = types;
+    }
+
+    /**
+     * Removes a row from the table
+     * @param index the index of the row to be removed
+     */
+    public void removeRow(int index) {
+        rows--;
+        String[][] newElements = new String[rows][columns];
+        for (int i = 0; i < elements.length; i++) {
+            if (i != index + 2) newElements[i] = elements[i];
+        }
+        elements = newElements;
+    }
+
+    /**
+     * Removes a column from the table
+     * @param index the index of the column to be removed
+     */
+    public void removeColumn(int index) {
+        columns--;
+        String[][] newElements = new String[rows][columns];
+        for(int row = 0; row < rows; row++) {
+            for (int col = 0; col < columns; col++) {
+                if (col != index + 2) newElements[row][col] = elements[row][col];
+            }
+        }
+        elements = newElements;
     }
 
     /**
