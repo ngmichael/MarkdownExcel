@@ -1,11 +1,11 @@
 package main.markdown;
 
+import java.util.List;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public class Table {
@@ -28,9 +28,8 @@ public class Table {
         columnTypes = new ColumnType[numberColumns];
         // Prefill table cells
         for (int i = 0; i < numberRows; i++) {
-            String[] init = new String[numberColumns];
-            Arrays.fill(init, " ");
-            elements[i] = init;
+            elements[i] = new String[numberColumns];
+            Arrays.fill(elements[i], " ");
         }
         // Prefill formating array
         Arrays.fill(columnTypes, ColumnType.NO_BOUND);
@@ -138,6 +137,7 @@ public class Table {
                 newElements[i] = oldElements.next();
             }
         }
+        elements = newElements;
     }
 
     /**
@@ -184,6 +184,22 @@ public class Table {
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * Default getter
+     * @return the number of Rows
+     */
+    public int getRowCount() {
+        return rows;
+    }
+
+    /**
+     * Default getter
+     * @return the number of columns
+     */
+    public int getColumnCount() {
+        return columns;
     }
 
     public static Optional<Table> fromLineStream(Stream<String> lines) {
