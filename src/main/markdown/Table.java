@@ -1,13 +1,41 @@
 package main.markdown;
 
-import java.util.List;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Class Table
+ *
+ * This code is part of the Markdown-Excel project.
+ * This class represents a MarkdownTable as defined
+ * in the GitHub-Flavored Markdown specification.
+ *
+ * Instances of this class provide the following methods:
+ *
+ * String get(int row, int column) ->               returns the value of a cell
+ *   void set(int row, int column, String value) -> sets the value of a cell
+ *   void setColumnType(ColumnType type) ->         set formatting type of the column
+ *   void setHeaderRow(String... values) ->         set the values of the header row
+ *   void appendRow() ->                            appends one row to the bottom of the table
+ *   void appendColumn() ->                         appends one column to the right side of the table
+ *   void insertRow(int index) ->                   inserts one row into the table at the specified index
+ *   void insertColumn(int index) ->                inserts one column into the table at the specified index
+ * String toString() ->                             returns a Markdown-Compliant string representing the table
+ *
+ * Additionally, this class provides the following static methods:
+ *
+ * static Optional<Table> fromLineStream(Stream<String> lines)
+ *      -> attempts to parse the supplied Stream of Strigs into a Table instance
+ *         and returns it on success. Otherwise an empty Optional will be returned.
+ *
+ *  @author Noah George Michael <noah.michael@mni.thm.de>
+ *  @version 0.0.1
+ */
 public class Table {
 
     private String[][] elements;
