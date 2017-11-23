@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class MarkdownTable {
+public class Table {
 
     private String[][] elements;
     private ColumnType[] columnTypes;
@@ -20,7 +20,7 @@ public class MarkdownTable {
      * @param numberColumns - The number of columns of this table
      * @param numberRows - The number of rows in this column
      */
-    public MarkdownTable(int numberRows, int numberColumns) {
+    public Table(int numberRows, int numberColumns) {
         this.columns = numberColumns;
         this.rows = numberRows;
         elements = new String[numberRows][numberColumns];
@@ -101,9 +101,9 @@ public class MarkdownTable {
     public void appendRow(){
         rows++;
         elements = Arrays.copyOf(elements, rows);
-        for (int i = 0; i < columns; i++) {
-            elements[rows-1][i] = "";
-        }
+        String[] values = new String[columns];
+        Arrays.fill(values, " ");
+        elements[rows-1] = values;
     }
 
     /**
@@ -114,10 +114,10 @@ public class MarkdownTable {
         for(int i = 0; i < rows; i++) {
             String[] column = elements[i];
             elements[i] = Arrays.copyOf(column, columns);
-            for (int j = 0; j < rows; j++) {
-                elements[j][columns-1] = "";
-            }
+            elements[i][columns-1] = " ";
         }
+        columnTypes = Arrays.copyOf(columnTypes, columns);
+        columnTypes[columns-1] = ColumnType.NO_BOUND;
     }
 
     /**
@@ -166,7 +166,7 @@ public class MarkdownTable {
         return sb.toString();
     }
 
-    public static Optional<MarkdownTable> fromLineStream(Stream<String> lines) {
+    public static Optional<Table> fromLineStream(Stream<String> lines) {
         int rows, columns;
         // First, filter out all lines that don't contatin pipes, since they cant be part of a table
         List<String> usableLines = lines.filter(s -> s.contains("|")).collect(Collectors.toList());
@@ -180,7 +180,7 @@ public class MarkdownTable {
         rows = usableLines.size();
         columns = (int) Arrays.stream(usableLines.get(0).split(Pattern.quote("|"))).filter(s -> s.length() > 0).count();
 
-        MarkdownTable table = new MarkdownTable(rows, columns);
+        Table table = new Table(rows, columns);
         return Optional.of(table);
     }
 }
