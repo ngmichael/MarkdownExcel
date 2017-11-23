@@ -1,6 +1,7 @@
 package main.markdown;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -118,6 +119,25 @@ public class Table {
         }
         columnTypes = Arrays.copyOf(columnTypes, columns);
         columnTypes[columns-1] = ColumnType.NO_BOUND;
+    }
+
+    /**
+     * Inserts a new row into the table
+     * @param index the index where the row is to be inserted
+     */
+    public void insertRow(int index) {
+        rows++;
+        String[][] newElements = new String[rows][columns];
+        Iterator<String[]> oldElements = Arrays.asList(elements).iterator();
+        for (int i = 0; i < rows; i++) {
+            if (i == index) {
+                newElements[i] = new String[columns];
+                Arrays.fill(newElements[i], " ");
+            }
+            else {
+                newElements[i] = oldElements.next();
+            }
+        }
     }
 
     /**
