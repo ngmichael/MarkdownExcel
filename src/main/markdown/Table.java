@@ -140,6 +140,24 @@ public class Table {
         elements = newElements;
     }
 
+    public void insertColumn(int index, ColumnType type) {
+        columns++;
+        String[][] newElements = new String[rows][columns];
+        for(int row = 0; row < rows; row++) {
+            Iterator<String> rowIterator = Arrays.asList(elements[row]).iterator();
+            for (int column = 0; column < columns; column++) {
+                newElements[row][column] = column == index ? " " : rowIterator.next();
+            }
+        }
+        elements = newElements;
+        ColumnType[] types = new ColumnType[columns];
+        Iterator<ColumnType> typeIter = Arrays.asList(columnTypes).iterator();
+        for (int i = 0; i < types.length; i++) {
+            types[i] = i == index ? type : typeIter.next();
+        }
+        columnTypes = types;
+    }
+
     /**
      * Converts this table into a markdown string
      * @return a string representation of this object
@@ -154,15 +172,15 @@ public class Table {
                 if (row == 1) {
                     sb.append('|');
                     switch (columnTypes[column]) {
-                        case LEFT_BOUND: { // left colon |:---|
+                        case LEFT_BOUND: { // left colon |:--|
                             sb.append(":---");
                             break;
                         }
-                        case CENTER_BOUND: { // both colons |:---:|
+                        case CENTER_BOUND: { // both colons |:-:|
                             sb.append(":---:");
                             break;
                         }
-                        case RIGHT_BOUND: { // right colon |---:|
+                        case RIGHT_BOUND: { // right colon |--:|
                             sb.append("---:");
                             break;
                         }
