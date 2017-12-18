@@ -1,3 +1,5 @@
+package main.markdownTable;
+
 public interface Vector {
 
     Vector setValues(String... values);

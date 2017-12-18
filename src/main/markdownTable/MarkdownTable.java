@@ -1,3 +1,7 @@
+package main.markdownTable;
+
+import main.Table;
+
 public interface MarkdownTable {
 
     MarkdownTable fromFile(String s);
@@ -17,8 +21,9 @@ public interface MarkdownTable {
     Vector getColumn(int index);
 
     void forEachRow(VectorOperation op);
+    void forEachColumn(VectorOperation op);
 
     MarkdownTable setFormatting(int column);
 
-    String build();
+    Table build();
 }
