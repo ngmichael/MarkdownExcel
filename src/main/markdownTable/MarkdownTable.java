@@ -20,10 +20,13 @@ public interface MarkdownTable {
     Vector getRow(int index);
     Vector getColumn(int index);
 
-    void forEachRow(VectorOperation op);
-    void forEachColumn(VectorOperation op);
+    MarkdownTable forSingleRow(int index, VectorOperation op);
+    MarkdownTable forSingleColumn(int index, VectorOperation op);
 
-    MarkdownTable setFormatting(int column);
+    MarkdownTable forEachRow(VectorOperation op);
+    MarkdownTable forEachColumn(VectorOperation op);
+
+    MarkdownTable setFormatting(int columnIndex, ColumnFormatting formatting);
 
     Table build();
 }
