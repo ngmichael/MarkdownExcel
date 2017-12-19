@@ -29,7 +29,7 @@ import java.util.OptionalDouble;
  *  @see Cell
  *  @see OptionalDouble
  *  @author Noah George Michael <noah.michael@mni.thm.de>
- *  @since 19.11.2017
+ *  @since 19.12.2017
  */
 public interface Vector {
 
@@ -41,6 +41,7 @@ public interface Vector {
      *
      * @param values The values to be inserted into this vector.
      * @return the updated vector
+     * @see Vector
      */
     Vector setValues(String... values);
 
@@ -57,6 +58,7 @@ public interface Vector {
      * cell in this vector.
      *
      * @param op the cell operation
+     * @see CellOperation
      */
     void forEachCell(CellOperation op);
 
@@ -66,6 +68,7 @@ public interface Vector {
      *
      * @param index the cell in question
      * @param op the operation for that cell
+     * @see CellOperation
      */
     void forSingleCell(int index, CellOperation op);
 
@@ -75,6 +78,7 @@ public interface Vector {
      * somehow do not allow arithmetic operations.
      *
      * @return an Optional over a double
+     * @see OptionalDouble
      */
     OptionalDouble mean();
 
@@ -84,6 +88,7 @@ public interface Vector {
      * somehow do not allow arithmetic operations.
      *
      * @return an Optional over a double
+     * @see OptionalDouble
      */
     OptionalDouble median();
 
@@ -93,6 +98,7 @@ public interface Vector {
      * somehow do not allow arithmetic operations.
      *
      * @return an Optional over a double
+     * @see OptionalDouble
      */
     OptionalDouble sum();
 
