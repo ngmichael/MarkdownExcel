@@ -13,8 +13,8 @@ import java.util.OptionalDouble;
  *
  * The following operations are available:
  *
- *  Vector setValues(String... values);
- *  String[] getValues();
+ *  Vector setValues(Cell... values);
+ *  Cell[] getValues();
  *
  *  forSingleCell(CellOperation op);
  *  void forEachCell(CellOperation op);
@@ -43,15 +43,15 @@ public interface Vector {
      * @return the updated vector
      * @see Vector
      */
-    Vector setValues(String... values);
+    Vector setValues(Cell... values);
 
     /**
      * Returns an array with sufficient length to contain
      * this vectors values.
      *
-     * @return a String-Array containing this vectors values
+     * @return a Cell-Array containing this vectors values
      */
-    String[] getValues();
+    Cell[] getValues();
 
     /**
      * Executes the supplied CellOperation on every
