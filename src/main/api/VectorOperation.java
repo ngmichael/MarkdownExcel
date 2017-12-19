@@ -7,14 +7,21 @@ package main.api;
 public interface VectorOperation {
     /**
      * Intended to be used with Lambda-Expressions.
-     * This function takes the two arguments v and index,
-     * a Vector representing a row or column from a table
-     * and an Integer representing the row or column number
-     * respectively. Implementations of this methos allow
+     *
+     * This function takes three arguments.
+     * The first one is an integer value which represents the row or
+     * column index of this vector.
+     * The second argument is the table of which the vector is a part of.
+     * The third argument is the vector itself.
+     *
+     * Implementations of this methods allow
      * arbitrary manipulation of the supplied Vector.
      *
-     * @param index the row or column index of the suppied vector
-     * @param v the supplied vector itself
+     * @param index the row or column index of the supplied vector
+     * @param table the current table builder
+     * @param vector the supplied vector itself
+     * @see Table
+     * @see Vector
      */
-    void manipulateVector(Integer index, Vector v);
+    void manipulateVector(Integer index, Table table, Vector vector);
 }

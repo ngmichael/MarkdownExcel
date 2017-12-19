@@ -10,6 +10,9 @@ public interface Table {
     Table setRows(int rows);
     Table setColumns(int columns);
 
+    int getRowCount();
+    int getColumnCount();
+
     Table insertRow(int index);
     Table insertRow(int index, Vector vec);
     Table appendRow();
