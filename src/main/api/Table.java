@@ -14,7 +14,7 @@ public interface Table {
     Table appendRow();
     Table removeRow(int index);
 
-    Table insertCoulmn(int index);
+    Table insertColumn(int index);
     Table appendColumn();
     Table deleteColumn(int index);
 
