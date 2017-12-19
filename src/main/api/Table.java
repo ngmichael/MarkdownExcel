@@ -11,11 +11,15 @@ public interface Table {
     Table setColumns(int columns);
 
     Table insertRow(int index);
+    Table insertRow(int index, Vector vec);
     Table appendRow();
+    Table appendRow(Vector vec);
     Table removeRow(int index);
 
     Table insertColumn(int index);
+    Table insertColumn(int index, Vector vec);
     Table appendColumn();
+    Table appendColumn(Vector vec);
     Table deleteColumn(int index);
 
     Vector getRow(int index);
