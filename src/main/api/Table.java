@@ -1,13 +1,14 @@
 package main.api;
 
-import main.ColumnFormatting;
-
 public interface Table {
 
     Table fromFile(String s);
 
     Table fromScratch();
     Table fromScratch(int rows, int columns);
+
+    Table setRows(int rows);
+    Table setColumns(int columns);
 
     Table insertRow(int index);
     Table appendRow();
@@ -28,5 +29,5 @@ public interface Table {
 
     Table setFormatting(int columnIndex, ColumnFormatting formatting);
 
-    Table build();
+    ImmutableTable build();
 }
