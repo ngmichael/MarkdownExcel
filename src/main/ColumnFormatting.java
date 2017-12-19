@@ -1,4 +1,4 @@
-package main.markdownTable;
+package main;
 
 public enum ColumnFormatting {
     LEFT_BOUND,

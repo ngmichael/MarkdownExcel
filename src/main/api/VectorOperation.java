@@ -1,4 +1,4 @@
-package main.markdownTable;
+package main.api;
 
 @FunctionalInterface
 public interface VectorOperation {
