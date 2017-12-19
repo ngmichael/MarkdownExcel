@@ -3,6 +3,9 @@ package main;
 import main.api.*;
 
 public final class TableBuilder implements Table {
+
+    public TableBuilder() {}
+
     @Override
     public Table fromFile(String s) {
         return null;
@@ -34,7 +37,17 @@ public final class TableBuilder implements Table {
     }
 
     @Override
+    public Table insertRow(int index, Vector vec) {
+        return null;
+    }
+
+    @Override
     public Table appendRow() {
+        return null;
+    }
+
+    @Override
+    public Table appendRow(Vector vec) {
         return null;
     }
 
@@ -49,7 +62,17 @@ public final class TableBuilder implements Table {
     }
 
     @Override
+    public Table insertColumn(int index, Vector vec) {
+        return null;
+    }
+
+    @Override
     public Table appendColumn() {
+        return null;
+    }
+
+    @Override
+    public Table appendColumn(Vector vec) {
         return null;
     }
 

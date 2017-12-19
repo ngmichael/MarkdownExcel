@@ -1,5 +1,7 @@
 package main.api;
 
+import main.TableBuilder;
+
 /**
  * An ImmutableTable
  *
@@ -7,6 +9,10 @@ package main.api;
  * @since 19.12.2017
  */
 public interface ImmutableTable {
+
+    static Table Builder() {
+        return new TableBuilder();
+    }
 
     Table edit();
     void writeToFile(String path);
