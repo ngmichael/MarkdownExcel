@@ -15,10 +15,7 @@ public interface ImmutableTable {
     static Table Builder() {
         return new TableBuilder();
     }
-
-    Table edit();
     void writeToFile(String path);
-
     Stream<Vector> valueStream();
 
 }
