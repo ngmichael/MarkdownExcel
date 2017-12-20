@@ -2,6 +2,7 @@ package main;
 
 import main.api.*;
 
+import java.io.*;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -11,12 +12,24 @@ public final class MarkdownTable implements ImmutableTable {
     private ColumnFormatting[] formattings;
 
     private MarkdownTable(Cell[][] values, ColumnFormatting[] formattings) {
-
+        this.values = values;
+        this.formattings = formattings;
     }
 
     @Override
     public void writeToFile(String path) {
-
+        try {
+            BufferedWriter w = new BufferedWriter(new FileWriter(new File(path)));
+            w.write(this.toString());
+            w.flush();
+            w.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found:");
+            System.err.println(path);
+        } catch (IOException e) {
+            System.err.println("Could not write to file:");
+            System.err.println(e.getLocalizedMessage());
+        }
     }
 
     @Override
@@ -24,8 +37,25 @@ public final class MarkdownTable implements ImmutableTable {
         return Stream.of(values).map(MarkdownVector::new);
     }
 
-    public final class TableBuilder implements Table {
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Cell[] row : values) {
+            sb.append('|');
+            for (Cell column : row) {
+                sb.append(" ").append(column.getValue()).append(" ").append('|');
+            }
+            sb.append('\n');
+        }
+        sb.append('\n');
 
+        return sb.toString();
+    }
+
+    public static final class TableBuilder implements Table {
+
+        private Cell[][] values;
+        private ColumnFormatting[] formattings;
         private int rows, columns;
 
         public TableBuilder() {
@@ -46,6 +76,9 @@ public final class MarkdownTable implements ImmutableTable {
             this.rows = rows;
             this.columns = columns;
             values = new Cell[rows][columns];
+            for (int row = 0; row < rows; row++) {
+                Arrays.fill(values[row], new MarkdownCell());
+            }
             formattings = new ColumnFormatting[columns];
             Arrays.fill(formattings, ColumnFormatting.NONE);
             return this;

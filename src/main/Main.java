@@ -14,5 +14,8 @@ public class Main {
                     });
                 })
                 .build();
+
+        System.out.println(t.toString());
+        t.writeToFile("asdf");
     }
 }
