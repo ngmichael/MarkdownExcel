@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 public final class MarkdownTable implements ImmutableTable {
 
     private Cell[][] values;
+    private ColumnFormatting[] formattings;
 
     private MarkdownTable(Cell[][] values, ColumnFormatting[] formattings) {
 
@@ -26,9 +27,6 @@ public final class MarkdownTable implements ImmutableTable {
     public final class TableBuilder implements Table {
 
         private int rows, columns;
-        private Cell[][] values;
-
-        private ColumnFormatting[] formattings;
 
         public TableBuilder() {
             rows = 0;
@@ -146,12 +144,13 @@ public final class MarkdownTable implements ImmutableTable {
 
         @Override
         public Table insertColumn(int index, Vector vec) {
+            /*
             columns += 1;
             Cell[][] newValues = new Cell[rows][columns];
             for (int col = 0; col < columns; col++) {
                 System.arraycopy(values);
             }
-        /*
+
         rows += 1;
         Cell[][] newValues = new Cell[rows][columns];
         for (int row = 0; row < rows; row++) {
@@ -164,6 +163,7 @@ public final class MarkdownTable implements ImmutableTable {
         values = newValues;
         return this;
          */
+            return null;
         }
 
         @Override
@@ -193,7 +193,8 @@ public final class MarkdownTable implements ImmutableTable {
 
         @Override
         public Table forSingleRow(int index, VectorOperation op) {
-            return null;
+            op.manipulateVector(index, this, new MarkdownVector(values[index]));
+            return this;
         }
 
         @Override
@@ -203,7 +204,10 @@ public final class MarkdownTable implements ImmutableTable {
 
         @Override
         public Table forEachRow(VectorOperation op) {
-            return null;
+            for (int row = 0; row < values.length; row++) {
+                op.manipulateVector(row, this, new MarkdownVector(values[row]));
+            }
+            return this;
         }
 
         @Override
@@ -219,7 +223,7 @@ public final class MarkdownTable implements ImmutableTable {
 
         @Override
         public ImmutableTable build() {
-            return null;
+            return new MarkdownTable(values, formattings);
         }
 
     }
