@@ -14,6 +14,20 @@ public class Main {
                 .setFormatting(2, ColumnFormatting.CENTERED)
                 .build()
                 .writeToFile("../foo/bar.md");
+
+        System.out.println(
+                new TableBuilder()
+                .setRows(5)
+                .setColumns(5)
+                .forEachRow((index, table, vector) -> {
+                    vector.forSingleCell(index, (index1, cell) -> {
+                        cell.setValue("x");
+                    });
+                })
+                .build()
+                .toString()
+        );
+
     }
 
 }
