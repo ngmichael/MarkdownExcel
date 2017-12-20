@@ -4,16 +4,26 @@ import main.api.Cell;
 import main.api.CellOperation;
 import main.api.Vector;
 
+import java.util.Arrays;
 import java.util.OptionalDouble;
 
 public class MarkdownVector implements Vector{
 
-    int index;
     private Cell[] values;
+
+    MarkdownVector(int size) {
+        values = new Cell[size];
+        Arrays.fill(values, new MarkdownCell());
+    }
+
+    MarkdownVector(Cell... values) {
+        this.values = values;
+    }
 
     @Override
     public Vector setValues(Cell... values) {
-        return null;
+        this.values = values;
+        return this;
     }
 
     @Override

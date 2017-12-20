@@ -2,6 +2,8 @@ package main.api;
 
 import main.TableBuilder;
 
+import java.util.stream.Stream;
+
 /**
  * An ImmutableTable
  *
@@ -16,5 +18,7 @@ public interface ImmutableTable {
 
     Table edit();
     void writeToFile(String path);
+
+    Stream<Vector> valueStream();
 
 }
