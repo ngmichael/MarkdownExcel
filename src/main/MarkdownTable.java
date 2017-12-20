@@ -54,6 +54,7 @@ public final class MarkdownTable implements ImmutableTable {
 
     public static final class TableBuilder implements Table {
 
+        private Vector headerRow;
         private Cell[][] values;
         private ColumnFormatting[] formattings;
         private int rows, columns;
@@ -62,7 +63,8 @@ public final class MarkdownTable implements ImmutableTable {
             rows = 0;
             columns = 0;
             values = new Cell[rows][columns];
-            formattings = new ColumnFormatting[0];
+            formattings = new ColumnFormatting[columns];
+            headerRow = new MarkdownVector(columns);
         }
 
         @Override
