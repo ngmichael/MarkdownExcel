@@ -101,7 +101,15 @@ public final class TableBuilder implements Table {
 
     @Override
     public Table removeRow(int index) {
-        return null;
+        rows -= 1;
+        Cell[][] newValues = new Cell[rows][columns];
+        for (int row = 0; row < rows; row++) {
+            if (row != index) {
+                System.arraycopy(values[row], 0, newValues[row], 0, values.length);
+            }
+        }
+        values = newValues;
+        return this;
     }
 
     @Override
