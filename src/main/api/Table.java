@@ -1,11 +1,17 @@
 package main.api;
 
+/**
+ * Interface Table
+ *
+ * This interface defines a builder class for Table instances.
+ *
+ *
+ */
 public interface Table {
 
     Table fromFile(String s);
-
-    Table fromScratch();
     Table fromScratch(int rows, int columns);
+    Table fromImmutableTable(ImmutableTable table);
 
     Table setRows(int rows);
     Table setColumns(int columns);
