@@ -122,26 +122,127 @@ public interface Table {
     Table removeRow(int index);
 
     /**
+     * Inserts a new empty column at the specified index
      *
-     * @param index
-     * @return
+     * @param index the index where the new row should be inserted
+     * @return The Table-Instance with one additional column
      */
     Table insertColumn(int index);
+
+    /**
+     * Inserts a new column into the table at the specified index and fills
+     * it with the values of the specified vector.
+     *
+     * @param vec the values which are to be inserted
+     * @param index the index where the new row should be inserted
+     * @return The Table-Instance with one additional pre-filled column
+     */
     Table insertColumn(int index, Vector vec);
+
+    /**
+     * Appends one empty column to the right end of the table
+     *
+     * @return The Table-Instance with one additional column at the end
+     */
     Table appendColumn();
+
+    /**
+     * Appends a new  column to the right end of the table and fills it
+     * with the values of the specified vector.
+     *
+     * @return The Table-Instance with one additional column at the end
+     */
     Table appendColumn(Vector vec);
+
+    /**
+     * Removes the column with the specified index from the table
+     * @param index the columns index
+     * @return The Table-Instance without the specified column
+     */
     Table deleteColumn(int index);
 
+    /**
+     * Returns a row.
+     *
+     * @apiNote This is a terminating operation, meaning that the vector has
+     * no information about this table and thus can't reach it.
+     * @param index the index of the row
+     * @return a Vector-Instance containing the values of the row
+     * @see Vector
+     */
     Vector getRow(int index);
+
+    /**
+     * Returns a column.
+     *
+     * @apiNote This is a terminating operation, meaning that the vector has
+     * no information about this table and thus can't reach it.
+     * @param index the index of the column
+     * @return a Vector-Instance containing the values of the column
+     * @see Vector
+     */
     Vector getColumn(int index);
 
+    /**
+     * Executes the VectorOperation op for the given row.
+     *
+     * @implNote VectorOperation is a functional interface.
+     * @param index the row on which the operation is to be executed
+     * @param op the operation itself
+     * @return The Table-Instance with one modified row
+     * @see VectorOperation
+     */
     Table forSingleRow(int index, VectorOperation op);
+
+    /**
+     * Executes the VectorOperation op for the given column.
+     *
+     * @implNote VectorOperation is a functional interface.
+     * @param index the column on which the operation is to be executed
+     * @param op the operation itself
+     * @return The Table-Instance with one modified column
+     * @see VectorOperation
+     */
     Table forSingleColumn(int index, VectorOperation op);
 
+    /**
+     * Executes the VectorOperation op for all rows.
+     *
+     * @implNote VectorOperation is a functional interface.
+     * @param op the operation to be performed
+     * @return The Table-Instance with modifications
+     * @see VectorOperation
+     */
     Table forEachRow(VectorOperation op);
+
+    /**
+     * Executes the VectorOperation op for all columns.
+     *
+     * @implNote VectorOperation is a functional interface.
+     * @param op the operation to be performed
+     * @return The Table-Instance with modifications
+     * @see VectorOperation
+     */
     Table forEachColumn(VectorOperation op);
 
+    /**
+     * Sets the formatting for a specific column.
+     *
+     * @param columnIndex the index of the column to be formatted
+     * @param formatting the desired formatting of that column
+     * @return The Table-Instance with modified format settings for the
+     * desired column
+     * @see ColumnFormatting
+     */
     Table setFormatting(int columnIndex, ColumnFormatting formatting);
 
+    /**
+     * Creates an ImmutableTable-Instance from this table builder
+     * and returns it.
+     * @implNote This is a terminating operation. ImmutableTable has no
+     * direct access to this builder and can't modify its own values. A
+     * new TableBuilder-Instance is needed if further modification is desired.
+     * @return An ImmutableTable.
+     */
     ImmutableTable build();
 }
