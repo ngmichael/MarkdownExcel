@@ -23,6 +23,13 @@ public class MarkdownVector implements Vector{
         this.values = values;
     }
 
+    MarkdownVector(String... values) {
+        this(values.length);
+        forEachCell((index, cell) -> {
+            cell.setValue(values[index]);
+        });
+    }
+
     @Override
     public Vector setValues(Cell... values) {
         this.values = values;

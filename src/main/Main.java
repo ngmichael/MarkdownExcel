@@ -10,6 +10,15 @@ public class Main {
                 .setHeaderRow("A", "s", "d", "f", "!")
                 .build();
 
-        System.out.println(t.toString());
+        // System.out.println(t.toString());
+
+        String s = MarkdownTable.Builder()
+                .fromScratch(2, 6)
+                .setHeaderRow("A", "s", "d", "f", "2", "!")
+                .forEachRow((index, tableBuilder, vector) -> vector.forEachCell((index1, cell) -> cell.setValue(" ")))
+                .insertColumn(2, "x", "a", "b")
+                .build().toString();
+
+        System.out.println(s);
     }
 }

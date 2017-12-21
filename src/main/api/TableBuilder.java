@@ -145,7 +145,7 @@ public interface TableBuilder {
      * @param title the title of the new column
      * @return The TableBuilder-Instance with one additional pre-filled column
      */
-    TableBuilder insertColumn(int index, String title, Vector values);
+    TableBuilder insertColumn(int index, String title, String... values);
 
     /**
      * Appends one empty column to the right end of the table
@@ -163,7 +163,7 @@ public interface TableBuilder {
      * @param values the values which are to be inserted
      * @return The TableBuilder-Instance with one additional column at the end
      */
-    TableBuilder appendColumn(String title, Vector values);
+    TableBuilder appendColumn(String title, String... values);
 
     /**
      * Removes the column with the specified index from the table

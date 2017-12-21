@@ -4,6 +4,7 @@ import main.api.*;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 public final class MarkdownTable implements ImmutableTable {
@@ -218,41 +219,56 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public TableBuilder insertColumn(int index) {
-            return insertColumn(index, new MarkdownVector(rows));
+        public TableBuilder insertColumn(int index, String title) {
+            return insertColumn(index, title, new String[0]);
         }
 
         @Override
-        public TableBuilder insertColumn(int index, Vector vec) {
-            /*
-            columns += 1;
-            Cell[][] newValues = new Cell[rows][columns];
-            for (int col = 0; col < columns; col++) {
-                System.arraycopy(values);
+        public TableBuilder insertColumn(int index, String title, String... vec) {
+            columns++;
+
+            // Extend the header row
+            Iterator<Cell> hrIter = headerRow.iterator();
+            headerRow = new MarkdownVector(columns);
+            headerRow.forEachCell((index1, cell) -> {
+                if (index1.equals(index)) {
+                    cell.setValue(title);
+                } else cell.setValue(hrIter.next().getValue());
+            });
+
+            // Extend the format row
+            Iterator<ColumnFormatting> oldFormatings = Arrays.asList(formattings).iterator();
+            formattings = new ColumnFormatting[columns];
+            for (int i = 0; i < columns; i++) {
+                if (i == index) formattings[i] = ColumnFormatting.NONE;
+                else formattings[i] = oldFormatings.next();
             }
 
-        rows += 1;
-        Cell[][] newValues = new Cell[rows][columns];
-        for (int row = 0; row < rows; row++) {
-            if (row == index) {
-                System.arraycopy(vec.getValues(), 0, newValues[row], 0, vec.getValues().length);
-                continue;
+            // Extend the rest
+            Cell[][] newValues = new MarkdownCell[rows][columns];
+            Iterator<Cell> vecIter = new MarkdownVector(vec).iterator();
+            for(int row = 0; row < rows; row++) {
+                Iterator<Cell> oldRow = Arrays.asList(values[row]).iterator();
+                for (int col = 0; col < columns; col++) {
+                    if (col == index) {
+                        newValues[row][col] = vecIter.next();
+                        continue;
+                    }
+                    newValues[row][col] = oldRow.next();
+                }
             }
-            System.arraycopy(values[row], 0, newValues[row], 0, values.length);
+
+            values = newValues;
+            return this;
         }
-        values = newValues;
-        return this;
-         */
+
+        @Override
+        public TableBuilder appendColumn(String title) {
             return null;
         }
 
         @Override
-        public TableBuilder appendColumn() {
-            return null;
-        }
-
-        @Override
-        public TableBuilder appendColumn(Vector vec) {
+        public TableBuilder appendColumn(String title, String... vec) {
             return null;
         }
 
