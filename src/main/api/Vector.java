@@ -1,5 +1,6 @@
 package main.api;
 
+import java.util.Iterator;
 import java.util.OptionalDouble;
 
 /**
@@ -30,6 +31,7 @@ import java.util.OptionalDouble;
  *  @see OptionalDouble
  *  @author Noah George Michael <noah.michael@mni.thm.de>
  *  @since 19.12.2017
+ *  @version 2
  */
 public interface Vector {
 
@@ -42,6 +44,7 @@ public interface Vector {
      * @param values The values to be inserted into this vector.
      * @return the updated vector
      * @see Vector
+     * @since Version 1
      */
     Vector setValues(Cell... values);
 
@@ -50,6 +53,7 @@ public interface Vector {
      * this vectors values.
      *
      * @return a Cell-Array containing this vectors values
+     * @since Version 1
      */
     Cell[] getValues();
 
@@ -59,6 +63,7 @@ public interface Vector {
      *
      * @param op the cell operation
      * @see CellOperation
+     * @since Version 1
      */
     void forEachCell(CellOperation op);
 
@@ -69,6 +74,7 @@ public interface Vector {
      * @param index the cell in question
      * @param op the operation for that cell
      * @see CellOperation
+     * @since Version 1
      */
     void forSingleCell(int index, CellOperation op);
 
@@ -79,6 +85,7 @@ public interface Vector {
      *
      * @return an Optional over a double
      * @see OptionalDouble
+     * @since Version 1
      */
     OptionalDouble mean();
 
@@ -89,6 +96,7 @@ public interface Vector {
      *
      * @return an Optional over a double
      * @see OptionalDouble
+     * @since Version 1
      */
     OptionalDouble median();
 
@@ -99,6 +107,7 @@ public interface Vector {
      *
      * @return an Optional over a double
      * @see OptionalDouble
+     * @since Version 1
      */
     OptionalDouble sum();
 
@@ -106,6 +115,16 @@ public interface Vector {
      * Returns the amount of cells in this vector
      *
      * @return the amount of cells
+     * @since Version 1
      */
     int length();
+
+    /**
+     * Returns an Iterator over the Elements of this Vector.
+     * @return An Iterator-Instance
+     * @see Iterator
+     * @see Cell
+     * @since Version 2
+     */
+    Iterator<Cell> iterator();
 }

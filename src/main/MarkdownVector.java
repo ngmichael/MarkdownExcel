@@ -5,6 +5,7 @@ import main.api.CellOperation;
 import main.api.Vector;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.OptionalDouble;
 
 public class MarkdownVector implements Vector{
@@ -63,5 +64,24 @@ public class MarkdownVector implements Vector{
     @Override
     public int length() {
         return values.length;
+    }
+
+    @Override
+    public Iterator<Cell> iterator() {
+        return new Iterator<>() {
+
+            private int index;
+
+            @Override
+            public boolean hasNext() {
+                return index < values.length;
+            }
+
+            @Override
+            public Cell next() {
+                if (index >= values.length) return null;
+                return values[index++];
+            }
+        };
     }
 }
