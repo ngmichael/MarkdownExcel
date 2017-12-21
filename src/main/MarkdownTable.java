@@ -12,6 +12,8 @@ public final class MarkdownTable implements ImmutableTable {
     private ColumnFormatting[] formattings;
     private Cell[][] values;
 
+    private MarkdownTable() {}
+
     private MarkdownTable(Cell[][] values, ColumnFormatting[] formattings, Vector headerRow) {
         this.values = values;
         this.formattings = formattings;
