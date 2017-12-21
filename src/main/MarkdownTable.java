@@ -113,7 +113,9 @@ public final class MarkdownTable implements ImmutableTable {
             this.columns = columns;
             values = new Cell[rows][columns];
             for (int row = 0; row < rows; row++) {
-                Arrays.fill(values[row], new MarkdownCell());
+                for (int column = 0; column < columns; column++) {
+                    values[row][column] = new MarkdownCell();
+                }
             }
             formattings = new ColumnFormatting[columns];
             Arrays.fill(formattings, ColumnFormatting.NONE);
@@ -167,10 +169,7 @@ public final class MarkdownTable implements ImmutableTable {
 
         @Override
         public TableBuilder insertRow(int index) {
-            Cell[] values = new Cell[this.columns];
-            Arrays.fill(values, new MarkdownCell());
-            Vector v = new MarkdownVector(values);
-            return insertRow(index, v);
+            return insertRow(index, new MarkdownVector(columns));
         }
 
         @Override
@@ -220,10 +219,7 @@ public final class MarkdownTable implements ImmutableTable {
 
         @Override
         public TableBuilder insertColumn(int index) {
-            Cell[] values = new Cell[this.columns];
-            Arrays.fill(values, new MarkdownCell());
-            Vector v = new MarkdownVector(values);
-            return insertColumn(index, v);
+            return insertColumn(index, new MarkdownVector(rows));
         }
 
         @Override
