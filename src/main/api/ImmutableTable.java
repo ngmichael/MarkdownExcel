@@ -1,7 +1,5 @@
 package main.api;
 
-import main.MarkdownTable.TableBuilder;
-
 import java.util.stream.Stream;
 
 /**
