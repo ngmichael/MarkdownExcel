@@ -61,6 +61,14 @@ public interface TableBuilder {
     TableBuilder setHeaderRow(Vector values);
 
     /**
+     * Sets the values of the header row to the supplied String[].
+     *
+     * @param values the new values for the header row
+     * @return The TableBuilder-Instance with the updated header
+     */
+    TableBuilder setHeaderRow(String... values);
+
+    /**
      * Sets the number of rows that this table has.
      *
      * @param rows the new number of rows for the table
