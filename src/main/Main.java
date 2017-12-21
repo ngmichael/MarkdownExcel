@@ -5,8 +5,11 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        MarkdownTable t = MarkdownTable.Builder()
+        MarkdownTable t = (MarkdownTable) MarkdownTable.Builder()
                 .fromScratch(5, 5)
-                .setHeaderRow()
+                .setHeaderRow("A", "s", "d", "f", "!")
+                .build();
+
+        System.out.println(t.toString());
     }
 }

@@ -8,12 +8,14 @@ import java.util.stream.Stream;
 
 public final class MarkdownTable implements ImmutableTable {
 
-    private Cell[][] values;
+    private Vector headerRow;
     private ColumnFormatting[] formattings;
+    private Cell[][] values;
 
-    private MarkdownTable(Cell[][] values, ColumnFormatting[] formattings) {
+    private MarkdownTable(Cell[][] values, ColumnFormatting[] formattings, Vector headerRow) {
         this.values = values;
         this.formattings = formattings;
+        this.headerRow = headerRow;
     }
 
     @Override
@@ -40,6 +42,32 @@ public final class MarkdownTable implements ImmutableTable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append('|');
+
+        // Add the header row to the string;
+        headerRow.forEachCell((index, cell) -> {
+            sb.append(" ").append(cell.getValue()).append(" |");
+        });
+        sb.append('\n');
+
+        // Add the column formatting row
+        sb.append('|');
+        for (ColumnFormatting c : formattings) {
+            switch (c) {
+                case NONE: sb.append("---");
+                    break;
+                case LEFT_BOUND: sb.append(":--");
+                    break;
+                case CENTERED: sb.append(":-:");
+                    break;
+                case RIGHT_BOUND: sb.append("--:");
+                    break;
+            }
+            sb.append("|");
+        }
+        sb.append('\n');
+
+        // Add the actual table itself
         for (int row = 0; row < values.length; row++) {
             sb.append('|');
             for (int col = 0; col < values[row].length; col++) {
@@ -98,7 +126,17 @@ public final class MarkdownTable implements ImmutableTable {
 
         @Override
         public TableBuilder setHeaderRow(Vector values) {
-            return null;
+            this.headerRow = values;
+            return this;
+        }
+
+        @Override
+        public TableBuilder setHeaderRow(String... values) {
+            headerRow = new MarkdownVector(values.length);
+            for (int i = 0; i < values.length; i++) {
+                headerRow.forSingleCell(i, (index, cell) -> cell.setValue(values[index]));
+            }
+            return this;
         }
 
         @Override
@@ -267,7 +305,7 @@ public final class MarkdownTable implements ImmutableTable {
 
         @Override
         public ImmutableTable build() {
-            return new MarkdownTable(values, formattings);
+            return new MarkdownTable(values, formattings, headerRow);
         }
 
     }
