@@ -10,9 +10,7 @@ package main.api;
  * The Methods supplied by this Interface are described in more detail down
  * below. Generally, these methods perform some sort of action on the table
  * and then return the modified TableBuilder-Instance. These manipulations are
- * always performed on the same instance which means that the state of a
- * table can not be saved by simply coping the instances reference. A deep
- * copy needs to be made for that.
+ * always performed on the same instance.
  *
  * @author Noah George Michael <noah.michael@mni.thm.de>
  * @since 20.12.2017
@@ -133,34 +131,39 @@ public interface TableBuilder {
      * Inserts a new empty column at the specified index
      *
      * @param index the index where the new row should be inserted
+     * @param title the title of the new column
      * @return The TableBuilder-Instance with one additional column
      */
-    TableBuilder insertColumn(int index);
+    TableBuilder insertColumn(int index, String title);
 
     /**
      * Inserts a new column into the table at the specified index and fills
      * it with the values of the specified vector.
      *
-     * @param vec the values which are to be inserted
+     * @param values the values which are to be inserted
      * @param index the index where the new row should be inserted
+     * @param title the title of the new column
      * @return The TableBuilder-Instance with one additional pre-filled column
      */
-    TableBuilder insertColumn(int index, Vector vec);
+    TableBuilder insertColumn(int index, String title, Vector values);
 
     /**
      * Appends one empty column to the right end of the table
      *
+     * @param title the title of the new column
      * @return The TableBuilder-Instance with one additional column at the end
      */
-    TableBuilder appendColumn();
+    TableBuilder appendColumn(String title);
 
     /**
      * Appends a new  column to the right end of the table and fills it
      * with the values of the specified vector.
      *
+     * @param title the title of the new column
+     * @param values the values which are to be inserted
      * @return The TableBuilder-Instance with one additional column at the end
      */
-    TableBuilder appendColumn(Vector vec);
+    TableBuilder appendColumn(String title, Vector values);
 
     /**
      * Removes the column with the specified index from the table
