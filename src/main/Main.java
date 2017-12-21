@@ -1,21 +1,12 @@
 package main;
 
-import main.api.Cell;
-import main.api.ColumnFormatting;
-import main.api.ImmutableTable;
+import main.api.*;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        MarkdownTable t = (MarkdownTable) ImmutableTable.Builder()
+        MarkdownTable t = MarkdownTable.Builder()
                 .fromScratch(5, 5)
-                .forEachRow((index, table, vector) -> {
-                    vector.forSingleCell(index, (index1, cell) -> {
-                        cell.setValue("x");
-                    });
-                })
-                .build();
-
-        System.out.println(t.toString());
-        t.writeToFile("asdf");
+                .setHeaderRow()
     }
 }

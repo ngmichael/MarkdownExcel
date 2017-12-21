@@ -12,9 +12,6 @@ import java.util.stream.Stream;
  */
 public interface ImmutableTable {
 
-    static Table Builder() {
-        return new TableBuilder();
-    }
     void writeToFile(String path);
     Stream<Vector> valueStream();
 

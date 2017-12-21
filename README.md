@@ -5,7 +5,7 @@ Feature-Testing for Markdown parsing and editing
 
     - count entries in row / column
     - calculate mean of row / column
-    - parse existing table into Table instance
+    - parse existing tableBuilder into Table instance
 
 ### In progress:
 

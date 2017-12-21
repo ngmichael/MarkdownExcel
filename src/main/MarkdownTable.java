@@ -40,10 +40,10 @@ public final class MarkdownTable implements ImmutableTable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Cell[] row : values) {
+        for (int row = 0; row < values.length; row++) {
             sb.append('|');
-            for (Cell column : row) {
-                sb.append(" ").append(column.getValue()).append(" ").append('|');
+            for (int col = 0; col < values[row].length; col++) {
+                sb.append(" ").append(values[row][col].getValue()).append(" ").append('|');
             }
             sb.append('\n');
         }
@@ -52,14 +52,18 @@ public final class MarkdownTable implements ImmutableTable {
         return sb.toString();
     }
 
-    public static final class TableBuilder implements Table {
+    public static TableBuilder Builder() {
+        return new Builder();
+    }
+
+    private static final class Builder implements TableBuilder {
 
         private Vector headerRow;
         private Cell[][] values;
         private ColumnFormatting[] formattings;
         private int rows, columns;
 
-        public TableBuilder() {
+        public Builder() {
             rows = 0;
             columns = 0;
             values = new Cell[rows][columns];
@@ -68,13 +72,13 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table fromFile(String s) {
+        public TableBuilder fromFile(String s) {
             // TODO: implement md file parsing here or call method
             return this;
         }
 
         @Override
-        public Table fromScratch(int rows, int columns) {
+        public TableBuilder fromScratch(int rows, int columns) {
             this.rows = rows;
             this.columns = columns;
             values = new Cell[rows][columns];
@@ -87,20 +91,25 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table fromImmutableTable(ImmutableTable table) {
+        public TableBuilder fromImmutableTable(ImmutableTable table) {
             values = new Cell[(int)table.valueStream().count()][0];
             return this;
         }
 
         @Override
-        public Table setRows(int rows) {
+        public TableBuilder setHeaderRow(Vector values) {
+            return null;
+        }
+
+        @Override
+        public TableBuilder setRows(int rows) {
             values = new Cell[rows][this.columns];
             this.rows = rows;
             return this;
         }
 
         @Override
-        public Table setColumns(int columns) {
+        public TableBuilder setColumns(int columns) {
             values = new Cell[this.rows][columns];
             this.columns = columns;
             return this;
@@ -117,7 +126,7 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table insertRow(int index) {
+        public TableBuilder insertRow(int index) {
             Cell[] values = new Cell[this.columns];
             Arrays.fill(values, new MarkdownCell());
             Vector v = new MarkdownVector(values);
@@ -125,7 +134,7 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table insertRow(int index, Vector vec) {
+        public TableBuilder insertRow(int index, Vector vec) {
             rows += 1;
             Cell[][] newValues = new Cell[rows][columns];
             for (int row = 0; row < rows; row++) {
@@ -140,12 +149,12 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table appendRow() {
+        public TableBuilder appendRow() {
             return appendRow(new MarkdownVector(columns));
         }
 
         @Override
-        public Table appendRow(Vector vec) {
+        public TableBuilder appendRow(Vector vec) {
             rows += 1;
             Cell[][] newValues = new Cell[rows][columns];
             for (int row = 0; row < rows-1; row++) {
@@ -157,7 +166,7 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table removeRow(int index) {
+        public TableBuilder removeRow(int index) {
             rows -= 1;
             Cell[][] newValues = new Cell[rows][columns];
             for (int row = 0; row < rows; row++) {
@@ -170,7 +179,7 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table insertColumn(int index) {
+        public TableBuilder insertColumn(int index) {
             Cell[] values = new Cell[this.columns];
             Arrays.fill(values, new MarkdownCell());
             Vector v = new MarkdownVector(values);
@@ -178,7 +187,7 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table insertColumn(int index, Vector vec) {
+        public TableBuilder insertColumn(int index, Vector vec) {
             /*
             columns += 1;
             Cell[][] newValues = new Cell[rows][columns];
@@ -202,17 +211,17 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table appendColumn() {
+        public TableBuilder appendColumn() {
             return null;
         }
 
         @Override
-        public Table appendColumn(Vector vec) {
+        public TableBuilder appendColumn(Vector vec) {
             return null;
         }
 
         @Override
-        public Table deleteColumn(int index) {
+        public TableBuilder deleteColumn(int index) {
             return null;
         }
 
@@ -227,18 +236,18 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table forSingleRow(int index, VectorOperation op) {
+        public TableBuilder forSingleRow(int index, VectorOperation op) {
             op.manipulateVector(index, this, new MarkdownVector(values[index]));
             return this;
         }
 
         @Override
-        public Table forSingleColumn(int index, VectorOperation op) {
+        public TableBuilder forSingleColumn(int index, VectorOperation op) {
             return null;
         }
 
         @Override
-        public Table forEachRow(VectorOperation op) {
+        public TableBuilder forEachRow(VectorOperation op) {
             for (int row = 0; row < values.length; row++) {
                 op.manipulateVector(row, this, new MarkdownVector(values[row]));
             }
@@ -246,12 +255,12 @@ public final class MarkdownTable implements ImmutableTable {
         }
 
         @Override
-        public Table forEachColumn(VectorOperation op) {
+        public TableBuilder forEachColumn(VectorOperation op) {
             return null;
         }
 
         @Override
-        public Table setFormatting(int columnIndex, ColumnFormatting formatting) {
+        public TableBuilder setFormatting(int columnIndex, ColumnFormatting formatting) {
             formattings[columnIndex] = formatting;
             return this;
         }

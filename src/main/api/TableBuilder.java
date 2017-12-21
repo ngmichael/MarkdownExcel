@@ -1,15 +1,15 @@
 package main.api;
 
 /**
- * Interface Table
+ * Interface TableBuilder
  *
  * This Interface defines a set of methods for building and editing GitHub-
  * Flavored Markdown tables. For more information on the exact specification
- * of this kind of Table, consult the GitHub-Flavored Markdown specification.
+ * of this kind of TableBuilder, consult the GitHub-Flavored Markdown specification.
  *
  * The Methods supplied by this Interface are described in more detail down
  * below. Generally, these methods perform some sort of action on the table
- * and then return the modified Table-Instance. These manipulations are
+ * and then return the modified TableBuilder-Instance. These manipulations are
  * always performed on the same instance which means that the state of a
  * table can not be saved by simply coping the instances reference. A deep
  * copy needs to be made for that.
@@ -19,7 +19,7 @@ package main.api;
  * @see ImmutableTable
  * @see main.MarkdownTable
  */
-public interface Table {
+public interface TableBuilder {
 
     /**
      * Creates a new markdown table by parsing the content of the
@@ -29,7 +29,7 @@ public interface Table {
      * @param s The path to the Markdown file
      * @return this table instance with the content of the supplied file
      */
-    Table fromFile(String s);
+    TableBuilder fromFile(String s);
 
     /**
      * Creates a new empty markdown table with the supplied amount of columns
@@ -39,7 +39,7 @@ public interface Table {
      * @param columns the amount of columns for this table
      * @return A new table instance
      */
-    Table fromScratch(int rows, int columns);
+    TableBuilder fromScratch(int rows, int columns);
 
     /**
      * Creates a new markdown table by parsing the content of the
@@ -49,32 +49,32 @@ public interface Table {
      * @param table an ImmutableTable
      * @return this table instance with the content of the supplied ImmutableTable
      */
-    Table fromImmutableTable(ImmutableTable table);
+    TableBuilder fromImmutableTable(ImmutableTable table);
 
     /**
      * Sets the header row of this table to the values of the
      * supplied vector.
      *
      * @param values the new values of the header row
-     * @return The Table-Instance with the updated header row
+     * @return The TableBuilder-Instance with the updated header row
      */
-    Table setHeaderRow(Vector values);
+    TableBuilder setHeaderRow(Vector values);
 
     /**
      * Sets the number of rows that this table has.
      *
      * @param rows the new number of rows for the table
-     * @return The Table-Instance with the specified amount of rows
+     * @return The TableBuilder-Instance with the specified amount of rows
      */
-    Table setRows(int rows);
+    TableBuilder setRows(int rows);
 
     /**
      * Sets the number of columns in this table
      *
      * @param columns the new number of columns for this table
-     * @return The Table-Instance with the specified amount if columns
+     * @return The TableBuilder-Instance with the specified amount if columns
      */
-    Table setColumns(int columns);
+    TableBuilder setColumns(int columns);
 
     int getRowCount();
     int getColumnCount();
@@ -84,50 +84,50 @@ public interface Table {
      *
      * @throws IndexOutOfBoundsException if the supplied index is out of bounds
      * @param index the index where the new row is to be inserted
-     * @return The Table-Instance with the extra row
+     * @return The TableBuilder-Instance with the extra row
      */
-    Table insertRow(int index) throws IndexOutOfBoundsException;
+    TableBuilder insertRow(int index) throws IndexOutOfBoundsException;
 
     /**
      * Inserts a pre-filled row at the specified index.
      *
      * @throws IndexOutOfBoundsException if the supplied index is out of bounds
      * @param index the index where the new row is to be inserted
-     * @return The Table-Instance with the extra row and its supplied values
+     * @return The TableBuilder-Instance with the extra row and its supplied values
      */
-    Table insertRow(int index, Vector vec) throws IndexOutOfBoundsException;
+    TableBuilder insertRow(int index, Vector vec) throws IndexOutOfBoundsException;
 
     /**
      * Appends an empty row to the bottom of the table.
      *
-     * @return The Table-Instance with an extra appended row
+     * @return The TableBuilder-Instance with an extra appended row
      */
-    Table appendRow();
+    TableBuilder appendRow();
 
     /**
      * Appends a row to the bottom of this table and fills it
      * with the values of the supplied Vector.
      *
      * @param vec The values to fill this new row with
-     * @return The Table-Instance with an extra appended row
+     * @return The TableBuilder-Instance with an extra appended row
      */
-    Table appendRow(Vector vec);
+    TableBuilder appendRow(Vector vec);
 
     /**
      * Removes the selected row from this table
      *
      * @param index the index of the row that's to be removed
-     * @return The Table-Instance without the selected row
+     * @return The TableBuilder-Instance without the selected row
      */
-    Table removeRow(int index);
+    TableBuilder removeRow(int index);
 
     /**
      * Inserts a new empty column at the specified index
      *
      * @param index the index where the new row should be inserted
-     * @return The Table-Instance with one additional column
+     * @return The TableBuilder-Instance with one additional column
      */
-    Table insertColumn(int index);
+    TableBuilder insertColumn(int index);
 
     /**
      * Inserts a new column into the table at the specified index and fills
@@ -135,31 +135,31 @@ public interface Table {
      *
      * @param vec the values which are to be inserted
      * @param index the index where the new row should be inserted
-     * @return The Table-Instance with one additional pre-filled column
+     * @return The TableBuilder-Instance with one additional pre-filled column
      */
-    Table insertColumn(int index, Vector vec);
+    TableBuilder insertColumn(int index, Vector vec);
 
     /**
      * Appends one empty column to the right end of the table
      *
-     * @return The Table-Instance with one additional column at the end
+     * @return The TableBuilder-Instance with one additional column at the end
      */
-    Table appendColumn();
+    TableBuilder appendColumn();
 
     /**
      * Appends a new  column to the right end of the table and fills it
      * with the values of the specified vector.
      *
-     * @return The Table-Instance with one additional column at the end
+     * @return The TableBuilder-Instance with one additional column at the end
      */
-    Table appendColumn(Vector vec);
+    TableBuilder appendColumn(Vector vec);
 
     /**
      * Removes the column with the specified index from the table
      * @param index the columns index
-     * @return The Table-Instance without the specified column
+     * @return The TableBuilder-Instance without the specified column
      */
-    Table deleteColumn(int index);
+    TableBuilder deleteColumn(int index);
 
     /**
      * Returns a row.
@@ -189,10 +189,10 @@ public interface Table {
      * @implNote VectorOperation is a functional interface.
      * @param index the row on which the operation is to be executed
      * @param op the operation itself
-     * @return The Table-Instance with one modified row
+     * @return The TableBuilder-Instance with one modified row
      * @see VectorOperation
      */
-    Table forSingleRow(int index, VectorOperation op);
+    TableBuilder forSingleRow(int index, VectorOperation op);
 
     /**
      * Executes the VectorOperation op for the given column.
@@ -200,41 +200,41 @@ public interface Table {
      * @implNote VectorOperation is a functional interface.
      * @param index the column on which the operation is to be executed
      * @param op the operation itself
-     * @return The Table-Instance with one modified column
+     * @return The TableBuilder-Instance with one modified column
      * @see VectorOperation
      */
-    Table forSingleColumn(int index, VectorOperation op);
+    TableBuilder forSingleColumn(int index, VectorOperation op);
 
     /**
      * Executes the VectorOperation op for all rows.
      *
      * @implNote VectorOperation is a functional interface.
      * @param op the operation to be performed
-     * @return The Table-Instance with modifications
+     * @return The TableBuilder-Instance with modifications
      * @see VectorOperation
      */
-    Table forEachRow(VectorOperation op);
+    TableBuilder forEachRow(VectorOperation op);
 
     /**
      * Executes the VectorOperation op for all columns.
      *
      * @implNote VectorOperation is a functional interface.
      * @param op the operation to be performed
-     * @return The Table-Instance with modifications
+     * @return The TableBuilder-Instance with modifications
      * @see VectorOperation
      */
-    Table forEachColumn(VectorOperation op);
+    TableBuilder forEachColumn(VectorOperation op);
 
     /**
      * Sets the formatting for a specific column.
      *
      * @param columnIndex the index of the column to be formatted
      * @param formatting the desired formatting of that column
-     * @return The Table-Instance with modified format settings for the
+     * @return The TableBuilder-Instance with modified format settings for the
      * desired column
      * @see ColumnFormatting
      */
-    Table setFormatting(int columnIndex, ColumnFormatting formatting);
+    TableBuilder setFormatting(int columnIndex, ColumnFormatting formatting);
 
     /**
      * Creates an ImmutableTable-Instance from this table builder
