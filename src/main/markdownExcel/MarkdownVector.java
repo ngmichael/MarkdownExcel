@@ -11,6 +11,8 @@ public class MarkdownVector implements Vector{
 
     private Cell[] values;
 
+    private MarkdownVector(){}
+
     MarkdownVector(int size) {
         values = new Cell[size];
         for (int i = 0; i < size; i++) {
