@@ -1,5 +1,7 @@
 package main.api;
 
+import main.markdownExcel.MarkdownTable;
+
 /**
  * Interface TableBuilder
  *
@@ -15,7 +17,7 @@ package main.api;
  * @author Noah George Michael <noah.michael@mni.thm.de>
  * @since 20.12.2017
  * @see ImmutableTable
- * @see main.MarkdownTable
+ * @see MarkdownTable
  */
 public interface TableBuilder {
 
