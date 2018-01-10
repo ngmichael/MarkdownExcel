@@ -3,6 +3,7 @@ package main.markdownExcel;
 import main.api.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class MarkdownTableBuilder implements TableBuilder {
@@ -11,6 +12,7 @@ public class MarkdownTableBuilder implements TableBuilder {
     private Cell[][] values;
     private ColumnFormatting[] formattings;
     private int rows, columns;
+    private HashMap<Cell, Formula> formulas;
 
     public MarkdownTableBuilder() {
         rows = 0;
@@ -18,6 +20,7 @@ public class MarkdownTableBuilder implements TableBuilder {
         values = new Cell[rows][columns];
         formattings = new ColumnFormatting[columns];
         headerRow = new MarkdownVector(columns);
+        formulas = new HashMap<>();
     }
 
     @Override
@@ -38,12 +41,14 @@ public class MarkdownTableBuilder implements TableBuilder {
         }
         formattings = new ColumnFormatting[columns];
         Arrays.fill(formattings, ColumnFormatting.NONE);
+        formulas = new HashMap<>();
         return this;
     }
 
     @Override
     public TableBuilder fromImmutableTable(ImmutableTable table) {
         values = new Cell[(int)table.valueStream().count()][0];
+        formulas = new HashMap<>();
         return this;
     }
 
@@ -232,6 +237,17 @@ public class MarkdownTableBuilder implements TableBuilder {
     @Override
     public TableBuilder setFormatting(int columnIndex, ColumnFormatting formatting) {
         formattings[columnIndex] = formatting;
+        return this;
+    }
+
+    @Override
+    public TableBuilder addFormula(int row, int column, Formula formula) {
+        return addFormula(values[row][column], formula);
+    }
+
+    @Override
+    public TableBuilder addFormula(Cell c, Formula formula) {
+        formulas.put(c, formula);
         return this;
     }
 
