@@ -14,7 +14,7 @@ public class MarkdownTableBuilder implements TableBuilder {
     private int rows, columns;
     private HashMap<Cell, Formula> formulas;
 
-    public MarkdownTableBuilder() {
+    MarkdownTableBuilder() {
         rows = 0;
         columns = 0;
         values = new Cell[rows][columns];
