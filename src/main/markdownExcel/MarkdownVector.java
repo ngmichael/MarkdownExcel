@@ -75,7 +75,25 @@ public class MarkdownVector implements Vector{
 
     @Override
     public OptionalDouble median() {
-        return OptionalDouble.empty();
+        double median = Double.NaN;
+
+        for (Cell c : values) {
+            try {
+                //noinspection ResultOfMethodCallIgnored
+                Double.parseDouble(c.getValue());
+            }
+            catch (NullPointerException | NumberFormatException e) {
+                return OptionalDouble.empty();
+            }
+        }
+
+        if (values.length % 2 == 0) {
+            double val1 = Double.parseDouble(values[(values.length/2)-1].getValue());
+            double val2 = Double.parseDouble(values[values.length/2].getValue());
+            return OptionalDouble.of((val1+val2)/2);
+        } else {
+            return OptionalDouble.of(Double.parseDouble(values[values.length/2].getValue()));
+        }
     }
 
     @Override
