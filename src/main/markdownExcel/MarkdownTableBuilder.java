@@ -1,10 +1,9 @@
 package main.markdownExcel;
 
 import main.api.*;
+import main.api.Vector;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class MarkdownTableBuilder implements TableBuilder {
 
@@ -218,7 +217,12 @@ public class MarkdownTableBuilder implements TableBuilder {
 
     @Override
     public TableBuilder forSingleColumn(int index, VectorOperation op) {
-        return null;
+        Cell[] cells = new Cell[rows];
+        for (int row = 0; row < rows; row++) {
+            cells[row]=values[row][index];
+        }
+        op.manipulateVector(index, this, new MarkdownVector(cells));
+        return this;
     }
 
     @Override
