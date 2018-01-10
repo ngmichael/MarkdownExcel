@@ -235,7 +235,15 @@ public class MarkdownTableBuilder implements TableBuilder {
 
     @Override
     public TableBuilder forEachColumn(VectorOperation op) {
-        return null;
+        for (int column = 0; column < columns; column++) {
+            Cell[] cells = new Cell[rows];
+            for (int row = 0; row < rows; row++) {
+                cells[row]=values[row][column];
+            }
+            op.manipulateVector(column, this, new MarkdownVector(cells));
+        }
+
+        return this;
     }
 
     @Override
