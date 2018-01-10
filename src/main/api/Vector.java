@@ -50,6 +50,19 @@ public interface Vector {
     Vector setValues(Cell... values);
 
     /**
+     * Inserts the supplied values into this vector.
+     * Already present values will be overwritten if
+     * enough values are supplied. If more values are supplied than
+     * can be handled by this vector, the remaining values will be discarded.
+     *
+     * @param values The values to be inserted into this vector.
+     * @return the updated vector
+     * @see Vector
+     * @since Version 3
+     */
+    Vector setValues(String... values);
+
+    /**
      * Returns an array with sufficient length to contain
      * this vectors values.
      *
