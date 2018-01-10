@@ -40,6 +40,14 @@ public class MarkdownVector implements Vector{
     }
 
     @Override
+    public Vector setValues(String... values) {
+        for (int i = 0; i < Math.max(this.values.length, values.length); i++) {
+            this.values[i].setValue(values[i]);
+        }
+        return this;
+    }
+
+    @Override
     public Cell[] getValues() {
         return values;
     }
