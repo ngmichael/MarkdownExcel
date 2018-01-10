@@ -2,6 +2,7 @@ package main.api;
 
 import java.util.Iterator;
 import java.util.OptionalDouble;
+import java.util.regex.Pattern;
 
 /**
  * This interface defines Vector operations. A Vector in a "table perspective"
@@ -118,6 +119,33 @@ public interface Vector {
      * @since Version 1
      */
     int length();
+
+    /**
+     * Finds the smallest numerical value in this vector and returns it.
+     * @return an Optional containing the smallest value
+     * @implNote If the Vector contains one or more non-numerical values, an
+     * empty optional is returned
+     * @since Version 3
+     */
+    OptionalDouble min();
+
+    /**
+     * Finds the biggest numerical value in this vector and returns it.
+     * @return an Optional containing the biggest value
+     * @implNote If the Vector contains one or more non-numerical values, an
+     * empty optional is returned
+     * @since Version 3
+     */
+    OptionalDouble max();
+
+    /**
+     * Matches every value against the supplied RegularExpression and
+     * returns a new Vector containing all positive matches.
+     * @param regEx the Regular Expression for matching
+     * @return a new Vector with positive matches
+     * @since Version 3
+     */
+    Vector match(Pattern regEx);
 
     /**
      * Returns an Iterator over the Elements of this Vector.

@@ -6,6 +6,7 @@ import main.api.Vector;
 
 import java.util.Iterator;
 import java.util.OptionalDouble;
+import java.util.regex.Pattern;
 
 public class MarkdownVector implements Vector{
 
@@ -68,7 +69,7 @@ public class MarkdownVector implements Vector{
             }
         }
 
-        return OptionalDouble.of(sum /= (double) values.length);
+        return OptionalDouble.of(sum / (double) values.length);
     }
 
     @Override
@@ -95,6 +96,21 @@ public class MarkdownVector implements Vector{
     @Override
     public int length() {
         return values.length;
+    }
+
+    @Override
+    public OptionalDouble min() {
+        return null;
+    }
+
+    @Override
+    public OptionalDouble max() {
+        return null;
+    }
+
+    @Override
+    public Vector match(Pattern regEx) {
+        return null;
     }
 
     @Override
