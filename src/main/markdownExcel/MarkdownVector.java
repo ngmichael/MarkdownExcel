@@ -106,7 +106,23 @@ public class MarkdownVector implements Vector{
 
     @Override
     public OptionalDouble max() {
-        return null;
+        double max = 0d;
+
+        for (Cell c : values) {
+            String number = c.getValue().replace(" ","");
+            double current;
+            try {
+                current = Double.parseDouble(number);
+            } catch (NullPointerException | NumberFormatException e) {
+                return OptionalDouble.empty();
+            }
+
+            if (current > max) {
+                max = current;
+            }
+        }
+
+        return OptionalDouble.of(max);
     }
 
     @Override
