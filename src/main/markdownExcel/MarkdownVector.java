@@ -101,12 +101,29 @@ public class MarkdownVector implements Vector{
 
     @Override
     public OptionalDouble min() {
-        return null;
+        double min = Double.POSITIVE_INFINITY;
+
+        for (Cell c : values) {
+            String number = c.getValue().replace(" ","");
+            double current;
+
+            try {
+                current = Double.parseDouble(number);
+            } catch (NullPointerException | NumberFormatException e) {
+                return OptionalDouble.empty();
+            }
+
+            if (current < min) {
+                min = current;
+            }
+        }
+
+        return OptionalDouble.of(min);
     }
 
     @Override
     public OptionalDouble max() {
-        double max = 0d;
+        double max = Double.NEGATIVE_INFINITY;
 
         for (Cell c : values) {
             String number = c.getValue().replace(" ","");
