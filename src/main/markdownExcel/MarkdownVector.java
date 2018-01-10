@@ -66,7 +66,18 @@ public class MarkdownVector implements Vector{
 
     @Override
     public OptionalDouble sum() {
-        return OptionalDouble.empty();
+        Double sum = 0d;
+
+        for(Cell c : values){
+            String number = c.getValue().replace(" ","");
+
+            if(number.matches("^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$")){
+                sum = sum + Double.parseDouble(number);
+            }
+            else return OptionalDouble.empty();
+        }
+
+        return OptionalDouble.of(sum);
     }
 
     @Override
