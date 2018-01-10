@@ -4,6 +4,7 @@ import main.api.Cell;
 import main.api.CellOperation;
 import main.api.Vector;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.OptionalDouble;
 import java.util.regex.Pattern;
@@ -110,7 +111,15 @@ public class MarkdownVector implements Vector{
 
     @Override
     public Vector match(Pattern regEx) {
-        return null;
+        ArrayList<Cell> cells = new ArrayList<>(values.length);
+
+        for (Cell c : values) {
+            if (c.getValue().matches(regEx.toString())) {
+                cells.add(c);
+            }
+        }
+
+        return new MarkdownVector((Cell[]) cells.toArray());
     }
 
     @Override
