@@ -56,7 +56,19 @@ public class MarkdownVector implements Vector{
 
     @Override
     public OptionalDouble mean() {
-        return OptionalDouble.empty();
+        double sum = 0;
+
+        for(Cell c : values){
+            String number = c.getValue().replace(" ","");
+
+            try {
+                sum += Double.parseDouble(number);
+            } catch (NumberFormatException | NullPointerException e) {
+                return OptionalDouble.empty();
+            }
+        }
+
+        return OptionalDouble.of(sum /= (double) values.length);
     }
 
     @Override
@@ -66,7 +78,7 @@ public class MarkdownVector implements Vector{
 
     @Override
     public OptionalDouble sum() {
-        Double sum = 0d;
+        double sum = 0d;
 
         for(Cell c : values){
             String number = c.getValue().replace(" ","");
