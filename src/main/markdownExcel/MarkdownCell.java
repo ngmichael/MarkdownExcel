@@ -18,9 +18,6 @@ public class MarkdownCell implements Cell {
         hasFormula = false;
         formula = null;
     }
-    MarkdownCell(String value) {
-        this.value = value;
-    }
 
     @Override
     public String getValue() {
