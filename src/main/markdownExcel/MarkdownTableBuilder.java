@@ -3,7 +3,15 @@ package main.markdownExcel;
 import main.api.*;
 import main.api.Vector;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class MarkdownTableBuilder implements TableBuilder {
 
@@ -23,8 +31,29 @@ public class MarkdownTableBuilder implements TableBuilder {
     }
 
     @Override
-    public TableBuilder fromFile(String s) {
-        // TODO: implement md file parsing here or call method
+    public TableBuilder fromFile(String path) {
+        BufferedReader reader;
+        List<String> lines = null;
+        IntStream tableInformation;
+        int rows, columns;
+
+        try {
+            reader = new BufferedReader(new FileReader(path));
+            lines = reader.lines().collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        rows = lines.size()-2;
+        columns = new StringTokenizer(lines.get(0), "|").countTokens();
+        this.fromScratch(rows, columns);
+
+        //TODO parse the first two lines
+        Iterator<String> lineIterator = lines.stream().skip(2).iterator();
+        this.forEachRow((index, tableBuilder, vector) -> {
+            vector.setValues(lineIterator.next().replace(" ", "").split(Pattern.quote("|")));
+        });
         return this;
     }
 
