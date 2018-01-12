@@ -58,7 +58,7 @@ public interface TableBuilder {
      * @param values the new values of the header row
      * @return The TableBuilder-Instance with the updated header row
      */
-    TableBuilder setHeaderRow(Vector values);
+    TableBuilder setHeader(Vector values);
 
     /**
      * Sets the values of the header row to the supplied String[].
@@ -66,7 +66,7 @@ public interface TableBuilder {
      * @param values the new values for the header row
      * @return The TableBuilder-Instance with the updated header
      */
-    TableBuilder setHeaderRow(String... values);
+    TableBuilder setHeader(String... values);
 
     /**
      * Sets the number of rows that this table has.
@@ -248,6 +248,18 @@ public interface TableBuilder {
      * @see ColumnFormatting
      */
     TableBuilder setFormatting(int columnIndex, ColumnFormatting formatting);
+
+    /**
+     * Sets the formatting for every column.
+     * If more values are supplied than columns exist, the remaining
+     * values will be discarded.
+     * If less values are supplied, the remaining columns stay unchanged.
+     *
+     * @param formattings the format values that are to be applied
+     * @return The TableBuilder-Instance with updated format values
+     */
+    TableBuilder setFormattings(ColumnFormatting... formattings);
+
     /**
      * Creates an ImmutableTable-Instance from this table builder
      * and returns it.

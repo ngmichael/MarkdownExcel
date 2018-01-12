@@ -75,13 +75,13 @@ public class MarkdownTableBuilder implements TableBuilder {
     }
 
     @Override
-    public TableBuilder setHeaderRow(Vector values) {
+    public TableBuilder setHeader(Vector values) {
         this.headerRow = values;
         return this;
     }
 
     @Override
-    public TableBuilder setHeaderRow(String... values) {
+    public TableBuilder setHeader(String... values) {
         headerRow = new MarkdownVector(values.length, this);
         for (int i = 0; i < values.length; i++) {
             headerRow.forSingleCell(i, (index, cell) -> cell.setValue(values[index]));
@@ -272,6 +272,18 @@ public class MarkdownTableBuilder implements TableBuilder {
     @Override
     public TableBuilder setFormatting(int columnIndex, ColumnFormatting formatting) {
         formattings[columnIndex] = formatting;
+        return this;
+    }
+
+    @Override
+    public TableBuilder setFormattings(ColumnFormatting... formattings) {
+        Iterator<ColumnFormatting> formats = Arrays.asList(formattings).iterator();
+        int i = 0;
+
+        while(formats.hasNext() && i < this.formattings.length) {
+            this.formattings[i] = formats.next();
+            i++;
+        }
         return this;
     }
 
