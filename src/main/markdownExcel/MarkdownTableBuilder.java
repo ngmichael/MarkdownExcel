@@ -154,7 +154,10 @@ public class MarkdownTableBuilder implements TableBuilder {
         headerRow.forEachCell((index1, cell) -> {
             if (index1.equals(index)) {
                 cell.setValue(title);
-            } else cell.setValue(hrIter.next().getValue());
+            } else {
+                if (hrIter.hasNext()) cell.setValue(hrIter.next().getValue());
+                else cell.setValue("");
+            }
         });
 
         // Extend the format row
@@ -172,7 +175,8 @@ public class MarkdownTableBuilder implements TableBuilder {
             Iterator<Cell> oldRow = Arrays.asList(values[row]).iterator();
             for (int col = 0; col < columns; col++) {
                 if (col == index) {
-                    newValues[row][col] = vecIter.next();
+                    Cell newValue = vecIter.next();
+                    newValues[row][col] = newValue != null ? newValue : new MarkdownCell(this);
                     continue;
                 }
                 newValues[row][col] = oldRow.next();
@@ -185,7 +189,8 @@ public class MarkdownTableBuilder implements TableBuilder {
 
     @Override
     public TableBuilder appendColumn(String title) {
-        return null;
+        insertColumn(columns, title);
+        return this;
     }
 
     @Override

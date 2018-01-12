@@ -74,7 +74,8 @@ public final class MarkdownTable implements ImmutableTable {
         for (int row = 0; row < values.length; row++) {
             sb.append('|');
             for (int col = 0; col < values[row].length; col++) {
-                sb.append(" ").append(values[row][col].getValue()).append(" ").append('|');
+                Cell c = values[row][col];
+                sb.append(" ").append(c != null ? c.getValue() : "(null)").append(" ").append('|');
             }
             sb.append('\n');
         }
