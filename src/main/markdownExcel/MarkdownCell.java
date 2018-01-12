@@ -18,6 +18,7 @@ public class MarkdownCell implements Cell {
         hasFormula = false;
         isExecuting = false;
         formula = null;
+        builderInstance = builder;
     }
 
     @Override
