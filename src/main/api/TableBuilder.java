@@ -248,28 +248,6 @@ public interface TableBuilder {
      * @see ColumnFormatting
      */
     TableBuilder setFormatting(int columnIndex, ColumnFormatting formatting);
-
-    /**
-     * Inserts a formula into a cell from the current table.
-     *
-     * @param row the row index of the cell
-     * @param column the column index of the cell
-     * @param formula the formula to be applied to the cell
-     * @return the TableBuilder-Instance with the added formula
-     * @see Formula
-     */
-    TableBuilder addFormula(int row, int column, Formula formula);
-
-    /**
-     * Inserts a formula into a cell from the current table.
-     *
-     * @param c the cell which the formula is supposed to be applied to
-     * @param formula the formula to be applied to the cell
-     * @return the TableBuilder-Instance with the added formula
-     * @see Formula
-     */
-    TableBuilder addFormula(Cell c, Formula formula);
-
     /**
      * Creates an ImmutableTable-Instance from this table builder
      * and returns it.

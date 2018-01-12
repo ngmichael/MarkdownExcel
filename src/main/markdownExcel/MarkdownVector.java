@@ -2,6 +2,7 @@ package main.markdownExcel;
 
 import main.api.Cell;
 import main.api.CellOperation;
+import main.api.TableBuilder;
 import main.api.Vector;
 
 import java.util.ArrayList;
@@ -12,22 +13,25 @@ import java.util.regex.Pattern;
 public class MarkdownVector implements Vector{
 
     private Cell[] values;
+    private TableBuilder builder;
 
     private MarkdownVector(){}
 
-    MarkdownVector(int size) {
+    MarkdownVector(int size, TableBuilder builder) {
         values = new Cell[size];
+        this.builder = builder;
         for (int i = 0; i < size; i++) {
-            values[i] = new MarkdownCell();
+            values[i] = new MarkdownCell(builder);
         }
     }
 
-    MarkdownVector(Cell... values) {
+    MarkdownVector(TableBuilder builder, Cell... values) {
+        this(values.length, builder);
         this.values = values;
     }
 
-    MarkdownVector(String... values) {
-        this(values.length);
+    MarkdownVector(TableBuilder builder, String... values) {
+        this(values.length, builder);
         forEachCell((index, cell) -> {
             cell.setValue(values[index]);
         });
@@ -169,16 +173,16 @@ public class MarkdownVector implements Vector{
     }
 
     @Override
-    public Vector match(Pattern regEx) {
+    public Vector match(String regEx) {
         ArrayList<Cell> cells = new ArrayList<>(values.length);
 
         for (Cell c : values) {
-            if (c.getValue().matches(regEx.toString())) {
+            if (c.getValue().matches(regEx)) {
                 cells.add(c);
             }
         }
 
-        return new MarkdownVector((Cell[]) cells.toArray());
+        return new MarkdownVector(this.builder, (Cell[]) cells.toArray());
     }
 
     @Override

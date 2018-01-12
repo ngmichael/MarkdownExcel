@@ -15,10 +15,8 @@ public interface Formula {
      * Acts as a formula for a cell.
      *
      * @param table the current Markdown-Table
-     * @param cell the cell on which the formula is applied
-     * @param index the index of that cell in its vector
      * @return a string representation of the result
      */
-    public String execute(Integer index, Cell cell, TableBuilder table);
+    String execute(TableBuilder table);
 
 }

@@ -10,10 +10,9 @@ public class MarkdownCell implements Cell {
     private Formula formula;
     private boolean hasFormula;
 
-    private int index;
     private TableBuilder builderInstance;
 
-    MarkdownCell() {
+    MarkdownCell(TableBuilder builder) {
         value = "";
         hasFormula = false;
         formula = null;
@@ -23,7 +22,7 @@ public class MarkdownCell implements Cell {
     public String getValue() {
         if (!hasFormula)
             return value;
-        value = formula.execute(index, this, builderInstance);
+        value = formula.execute(builderInstance);
         return value;
     }
 
@@ -42,5 +41,10 @@ public class MarkdownCell implements Cell {
     @Override
     public Formula getFormula() {
         return this.hasFormula ? formula : null;
+    }
+
+    @Override
+    public boolean hasFormula() {
+        return hasFormula;
     }
 }

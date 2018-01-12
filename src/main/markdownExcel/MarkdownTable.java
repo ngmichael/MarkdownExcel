@@ -39,7 +39,7 @@ public final class MarkdownTable implements ImmutableTable {
 
     @Override
     public Stream<Vector> valueStream() {
-        return Stream.of(values).map(MarkdownVector::new);
+        return null;
     }
 
     @Override

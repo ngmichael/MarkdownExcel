@@ -10,6 +10,7 @@ public interface Cell {
 
     /**
      * Returns the value of this cell as a string
+     *
      * @return the value
      * @since Version 1
      */
@@ -17,6 +18,7 @@ public interface Cell {
 
     /**
      * Sets the value of this cell
+     *
      * @param value the value for this cell
      * @since Version 1
      */
@@ -32,8 +34,17 @@ public interface Cell {
 
     /**
      * Returns the formula of this cell
+     *
      * @return a Formula-Instance or null if this cell doesn't have a formula
      * @since Version 2
      */
     Formula getFormula();
+
+    /**
+     * Check whether this cell has a formula or not
+     *
+     * @return a boolean representing the presence of a formula
+     * @since Version 2
+     */
+    boolean hasFormula();
 }

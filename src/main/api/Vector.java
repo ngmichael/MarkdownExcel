@@ -158,7 +158,7 @@ public interface Vector {
      * @return a new Vector with positive matches
      * @since Version 3
      */
-    Vector match(Pattern regEx);
+    Vector match(String regEx);
 
     /**
      * Returns an Iterator over the Elements of this Vector.
