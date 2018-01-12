@@ -90,30 +90,6 @@ public class MarkdownTableBuilder implements TableBuilder {
     }
 
     @Override
-    public TableBuilder setRows(int rows) {
-        values = new Cell[rows][this.columns];
-        this.rows = rows;
-        return this;
-    }
-
-    @Override
-    public TableBuilder setColumns(int columns) {
-        values = new Cell[this.rows][columns];
-        this.columns = columns;
-        return this;
-    }
-
-    @Override
-    public int getRowCount() {
-        return rows;
-    }
-
-    @Override
-    public int getColumnCount() {
-        return columns;
-    }
-
-    @Override
     public TableBuilder insertRow(int index) {
         return insertRow(index, new MarkdownVector(columns, this));
     }

@@ -69,25 +69,6 @@ public interface TableBuilder {
     TableBuilder setHeader(String... values);
 
     /**
-     * Sets the number of rows that this table has.
-     *
-     * @param rows the new number of rows for the table
-     * @return The TableBuilder-Instance with the specified amount of rows
-     */
-    TableBuilder setRows(int rows);
-
-    /**
-     * Sets the number of columns in this table
-     *
-     * @param columns the new number of columns for this table
-     * @return The TableBuilder-Instance with the specified amount if columns
-     */
-    TableBuilder setColumns(int columns);
-
-    int getRowCount();
-    int getColumnCount();
-
-    /**
      * Inserts a new empty row at the specified index.
      *
      * @throws IndexOutOfBoundsException if the supplied index is out of bounds
