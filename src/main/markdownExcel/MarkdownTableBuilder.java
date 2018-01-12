@@ -189,13 +189,14 @@ public class MarkdownTableBuilder implements TableBuilder {
 
     @Override
     public TableBuilder appendColumn(String title) {
-        insertColumn(columns, title);
+        appendColumn(title, new String[0]);
         return this;
     }
 
     @Override
     public TableBuilder appendColumn(String title, String... vec) {
-        return null;
+        insertColumn(columns, title, vec);
+        return this;
     }
 
     @Override
