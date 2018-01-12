@@ -9,12 +9,14 @@ public class MarkdownCell implements Cell {
     private String value;
     private Formula formula;
     private boolean hasFormula;
+    private boolean isExecuting;
 
     private TableBuilder builderInstance;
 
     MarkdownCell(TableBuilder builder) {
         value = "";
         hasFormula = false;
+        isExecuting = false;
         formula = null;
     }
 
@@ -22,7 +24,14 @@ public class MarkdownCell implements Cell {
     public String getValue() {
         if (!hasFormula)
             return value;
-        value = formula.execute(builderInstance);
+        else if (!isExecuting){
+            isExecuting = true;
+            value = formula.execute(builderInstance);
+        }
+        else {
+            return "\"UNDEFINED\"";
+        }
+        isExecuting = false;
         return value;
     }
 
