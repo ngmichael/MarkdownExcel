@@ -201,17 +201,54 @@ public class MarkdownTableBuilder implements TableBuilder {
 
     @Override
     public TableBuilder deleteColumn(int index) {
-        return null;
+        columns--;
+
+        // Reduce the header row
+        Iterator<Cell> hrIter = headerRow.iterator();
+        headerRow = new MarkdownVector(columns, this);
+        headerRow.forEachCell((index1, cell) -> {
+            if (index1 != index) {
+                cell.setValue(hrIter.next().getValue());
+            }
+        });
+
+        // Extend the format row
+        Iterator<ColumnFormatting> oldFormatings = Arrays.asList(formattings).iterator();
+        formattings = new ColumnFormatting[columns];
+        for (int i = 0; i < columns; i++) {
+            if (i != index) formattings[i] = formattings[i] = oldFormatings.next();
+        }
+
+        // Extend the rest
+        Cell[][] newValues = new MarkdownCell[rows][columns];
+        for(int row = 0; row < rows; row++) {
+            Iterator<Cell> oldRow = Arrays.asList(values[row]).iterator();
+            for (int col = 0; col < columns; col++) {
+                if (col != index) {
+                    Cell newValue = oldRow.next();
+                    newValues[row][col] = newValue != null ? newValue : new MarkdownCell(this);
+                    continue;
+                }
+                newValues[row][col] = oldRow.next();
+            }
+        }
+
+        values = newValues;
+        return this;
     }
 
     @Override
     public Vector getRow(int index) {
-        return null;
+        return new MarkdownVector(this, values[index]);
     }
 
     @Override
     public Vector getColumn(int index) {
-        return null;
+        Cell[] cells = new Cell[rows];
+        for (int i = 0; i < rows; i++) {
+            cells[i] = values[i][index];
+        }
+        return new MarkdownVector(this, cells);
     }
 
     @Override
