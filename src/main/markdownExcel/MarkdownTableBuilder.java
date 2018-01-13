@@ -44,11 +44,19 @@ public class MarkdownTableBuilder implements TableBuilder {
         rows = lines.size()-2;
         columns = new StringTokenizer(lines.get(0), "|").countTokens();
         this.fromScratch(rows, columns);
+        this.setHeader(
+                Arrays.stream(lines.get(0).split(Pattern.quote("|")))
+                        .filter(s -> !s.equals(""))
+                        .map(String::trim)
+                        .collect(Collectors.toList())
+                        .toArray(new String[columns])
+        );
+        this.setFormattings(createFormattingRow(lines.get(1)));
 
-        //TODO parse the first two lines
         Iterator<String> lineIterator = lines.stream().skip(2).iterator();
         this.forEachRow((index, tableBuilder, vector) -> {
-            vector.setValues(lineIterator.next().replace(" ", "").split(Pattern.quote("|")));
+            Iterator<String> values = Arrays.stream(lineIterator.next().split(Pattern.quote("|"))).filter(s -> !s.equals("")).iterator();
+            vector.forEachCell((index1, cell) -> cell.setValue(values.next().trim()));
         });
         return this;
     }
@@ -309,6 +317,28 @@ public class MarkdownTableBuilder implements TableBuilder {
     @Override
     public ImmutableTable build() {
         return new MarkdownTable(values, formattings, headerRow);
+    }
+
+    private ColumnFormatting[] createFormattingRow(String rawInput){
+        List<String> formatStrings = Arrays.stream(rawInput.split(Pattern.quote("|")))
+                .filter(s -> !s.equals(""))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        ColumnFormatting[] formattings = new ColumnFormatting[formatStrings.size()];
+        for (int i = 0; i < formatStrings.size(); i++) {
+            String format = formatStrings.get(i);
+            if (format.startsWith(":") && !format.endsWith(":")) {
+                formattings[i] = ColumnFormatting.LEFT_BOUND;
+            }
+            else if (!format.startsWith(":") && format.endsWith(":")) {
+                formattings[i] = ColumnFormatting.RIGHT_BOUND;
+            }
+            else if (format.startsWith(":") && format.endsWith(":")) {
+                formattings[i] = ColumnFormatting.CENTERED;
+            }
+            else formattings[i] = ColumnFormatting.NONE;
+        }
+        return formattings;
     }
 
 }
