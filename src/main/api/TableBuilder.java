@@ -153,7 +153,7 @@ public interface TableBuilder {
      * @param index the columns index
      * @return The TableBuilder-Instance without the specified column
      */
-    TableBuilder deleteColumn(int index);
+    TableBuilder removeColumn(int index);
 
     /**
      * Returns a row.

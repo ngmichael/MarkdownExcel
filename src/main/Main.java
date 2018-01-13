@@ -8,6 +8,7 @@ public class Main {
         String s = MarkdownTable.Builder()
                 .fromScratch(4, 5)
                 .appendColumn("AsdfMovie")
+                
                 .build()
                 .toString();
 

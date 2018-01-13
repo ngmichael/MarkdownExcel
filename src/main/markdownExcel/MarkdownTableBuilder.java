@@ -200,7 +200,7 @@ public class MarkdownTableBuilder implements TableBuilder {
     }
 
     @Override
-    public TableBuilder deleteColumn(int index) {
+    public TableBuilder removeColumn(int index) {
         columns--;
 
         // Reduce the header row
