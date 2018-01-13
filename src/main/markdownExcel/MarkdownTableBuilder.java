@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class MarkdownTableBuilder implements TableBuilder {
 
@@ -30,7 +29,6 @@ public class MarkdownTableBuilder implements TableBuilder {
     public TableBuilder fromFile(String path) {
         BufferedReader reader;
         List<String> lines = null;
-        IntStream tableInformation;
         int rows, columns;
 
         try {
