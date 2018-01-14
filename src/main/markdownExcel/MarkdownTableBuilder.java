@@ -54,7 +54,7 @@ public class MarkdownTableBuilder implements TableBuilder {
         Iterator<String> lineIterator = lines.stream().skip(2).iterator();
         this.forEachRow((index, tableBuilder, vector) -> {
             Iterator<String> values = Arrays.stream(lineIterator.next().split(Pattern.quote("|"))).filter(s -> !s.equals("")).iterator();
-            vector.forEachCell((index1, cell) -> cell.setValue(values.next().trim()));
+            vector.forEachCell((index1, cell) -> cell.setValue(values.hasNext() ? values.next().trim() : " "));
         });
         return this;
     }
