@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.OptionalDouble;
-import java.util.regex.Pattern;
 
 public class MarkdownVector implements Vector{
 
     private Cell[] values;
     private TableBuilder builder;
 
+    @SuppressWarnings("unused")
     private MarkdownVector(){}
 
     MarkdownVector(int size, TableBuilder builder) {
@@ -33,9 +33,7 @@ public class MarkdownVector implements Vector{
 
     MarkdownVector(TableBuilder builder, String... values) {
         this(values.length, builder);
-        forEachCell((index, cell) -> {
-            cell.setValue(values[index]);
-        });
+        forEachCell((index, cell) -> cell.setValue(values[index]));
     }
 
     @Override
@@ -89,8 +87,6 @@ public class MarkdownVector implements Vector{
 
     @Override
     public OptionalDouble median() {
-        double median = Double.NaN;
-
         for (Cell c : values) {
             try {
                 //noinspection ResultOfMethodCallIgnored

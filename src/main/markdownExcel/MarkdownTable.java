@@ -3,8 +3,6 @@ package main.markdownExcel;
 import main.api.*;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.stream.Stream;
 
 public final class MarkdownTable implements ImmutableTable {
@@ -13,6 +11,7 @@ public final class MarkdownTable implements ImmutableTable {
     private ColumnFormatting[] formattings;
     private Cell[][] values;
 
+    @SuppressWarnings("unused")
     private MarkdownTable() {}
 
     MarkdownTable(Cell[][] values, ColumnFormatting[] formattings, Vector headerRow) {

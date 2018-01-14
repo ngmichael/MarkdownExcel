@@ -2,7 +2,6 @@ package main.api;
 
 import java.util.Iterator;
 import java.util.OptionalDouble;
-import java.util.regex.Pattern;
 
 /**
  * This interface defines Vector operations. A Vector in a "table perspective"
@@ -34,6 +33,7 @@ import java.util.regex.Pattern;
  *  @since 19.12.2017
  *  @version 2
  */
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public interface Vector {
 
     /**

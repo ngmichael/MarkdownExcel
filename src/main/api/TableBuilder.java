@@ -19,6 +19,7 @@ import main.markdownExcel.MarkdownTable;
  * @see ImmutableTable
  * @see MarkdownTable
  */
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public interface TableBuilder {
 
     /**
