@@ -48,9 +48,7 @@ public final class MarkdownTable implements ImmutableTable {
         sb.append('|');
 
         // Add the header row to the string;
-        headerRow.forEachCell((index, cell) -> {
-            sb.append(" ").append(cell.getValue()).append(" |");
-        });
+        headerRow.forEachCell((index, cell) -> sb.append(" ").append(cell.getValue()).append(" |"));
         sb.append('\n');
 
         // Add the column formatting row
@@ -71,15 +69,13 @@ public final class MarkdownTable implements ImmutableTable {
         sb.append('\n');
 
         // Add the actual table itself
-        for (int row = 0; row < values.length; row++) {
+        for (Cell[] rows : values) {
             sb.append('|');
-            for (int col = 0; col < values[row].length; col++) {
-                Cell c = values[row][col];
-                sb.append(" ").append(c != null ? c.getValue() : "(null)").append(" ").append('|');
+            for (Cell cell : rows) {
+                sb.append(" ").append(cell != null ? cell.getValue() : "(null)").append(" ").append('|');
             }
             sb.append('\n');
         }
-        sb.append('\n');
 
         return sb.toString();
     }
