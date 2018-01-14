@@ -179,7 +179,7 @@ public class MarkdownVector implements Vector{
         List<Cell> cellList = new ArrayList<>(values.length);
 
         for (Cell c : values) {
-            if (c.getValue().matches(Pattern.quote(regEx))){
+            if (c.getValue().matches(regEx)){
                 cellList.add(c);
             }
         }
