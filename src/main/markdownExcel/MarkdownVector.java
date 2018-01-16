@@ -41,7 +41,6 @@ public final class MarkdownVector implements Vector, Cloneable{
 
     @Override
     public Vector setValues(String... values) {
-        System.out.println(this.values.length + " " + values.length);
         for (int i = 0; i < Math.min(this.values.length, values.length); i++) {
             this.values[i].setValue(values[i]);
         }
