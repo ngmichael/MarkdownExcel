@@ -4,7 +4,7 @@ import main.api.Cell;
 import main.api.Formula;
 import main.api.TableBuilder;
 
-public class MarkdownCell implements Cell {
+public final class MarkdownCell implements Cell {
 
     private String value;
     private Formula formula;

@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.OptionalDouble;
 
-public class MarkdownVector implements Vector{
+public final class MarkdownVector implements Vector{
 
     private Cell[] values;
     private TableBuilder builder;

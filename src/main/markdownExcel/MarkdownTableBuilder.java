@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class MarkdownTableBuilder implements TableBuilder {
+public final class MarkdownTableBuilder implements TableBuilder {
 
     private Vector headerRow;
     private Cell[][] values;
