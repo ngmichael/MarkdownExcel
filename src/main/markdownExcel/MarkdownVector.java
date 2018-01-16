@@ -5,10 +5,7 @@ import main.api.CellOperation;
 import main.api.TableBuilder;
 import main.api.Vector;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.OptionalDouble;
+import java.util.*;
 
 public final class MarkdownVector implements Vector, Cloneable{
 
@@ -66,6 +63,19 @@ public final class MarkdownVector implements Vector, Cloneable{
     @Override
     public void forSingleCell(int index, CellOperation op) {
         op.manipulateCell(index, values[index]);
+    }
+
+    @Override
+    public Vector sort() {
+        Comparator<Cell> comp = Comparator.comparing(Cell::getValue);
+        return sort(comp);
+    }
+
+    @Override
+    public Vector sort(Comparator<Cell> comparator) {
+        MarkdownVector sortedVector = (MarkdownVector) this.clone();
+        Arrays.sort(sortedVector.getValues(), comparator);
+        return sortedVector;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package main.api;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.OptionalDouble;
 
@@ -91,6 +92,22 @@ public interface Vector {
      * @since Version 1
      */
     void forSingleCell(int index, CellOperation op);
+
+    /**
+     * Sorts the values of thi vector with a default comparator.
+     * The default comparator compares lexicographical order of the elements.
+     *
+     * @return A new Vector-Instance with the result of the sorting operation
+     */
+    Vector sort();
+
+    /**
+     * Sorts the values of this vector using the given comparator.
+     *
+     * @param comparator the comparator for determining the order of elements
+     * @return A new Vector-Instance with the result of the sorting operation
+     */
+    Vector sort(Comparator<Cell> comparator);
 
     /**
      * Attempts to calculate the mean of all cells for this vector
