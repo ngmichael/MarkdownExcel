@@ -76,7 +76,26 @@ public class MarkdownTableBuilder implements TableBuilder {
 
     @Override
     public TableBuilder fromImmutableTable(ImmutableTable table) {
-        // values = new Cell[(int)table.valueStream().count()][0];
+        int rows, columns;
+        List<String> lines = Arrays.asList(table.toString().split(Pattern.quote("\n")));
+
+        rows = lines.size()-2;
+        columns = new StringTokenizer(lines.get(0), "|").countTokens();
+        this.fromScratch(rows, columns);
+        this.setHeader(
+                Arrays.stream(lines.get(0).split(Pattern.quote("|")))
+                        .filter(s -> !s.equals(""))
+                        .map(String::trim)
+                        .collect(Collectors.toList())
+                        .toArray(new String[columns])
+        );
+        this.setFormattings(createFormattingRow(lines.get(1)));
+
+        Iterator<String> lineIterator = lines.stream().skip(2).iterator();
+        this.forEachRow((index, tableBuilder, vector) -> {
+            Iterator<String> values = Arrays.stream(lineIterator.next().split(Pattern.quote("|"))).filter(s -> !s.equals("")).iterator();
+            vector.forEachCell((index1, cell) -> cell.setValue(values.hasNext() ? values.next().trim() : " "));
+        });
         return this;
     }
 
