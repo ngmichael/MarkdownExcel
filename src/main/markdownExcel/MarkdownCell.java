@@ -4,7 +4,7 @@ import main.api.Cell;
 import main.api.Formula;
 import main.api.TableBuilder;
 
-public final class MarkdownCell implements Cell {
+public final class MarkdownCell implements Cell, Cloneable {
 
     private String value;
     private Formula formula;
@@ -56,5 +56,23 @@ public final class MarkdownCell implements Cell {
     @Override
     public boolean hasFormula() {
         return hasFormula;
+    }
+
+    @Override
+    public Cell clone() {
+        MarkdownCell newCell = null;
+        try {
+             newCell = (MarkdownCell) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        assert newCell != null;
+
+        newCell.value = this.value;
+        newCell.formula = this.formula;
+        newCell.hasFormula = hasFormula;
+        newCell.isExecuting = this.isExecuting;
+        return newCell;
     }
 }

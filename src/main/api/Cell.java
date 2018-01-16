@@ -47,4 +47,6 @@ public interface Cell {
      * @since Version 2
      */
     boolean hasFormula();
+
+    Cell clone();
 }
