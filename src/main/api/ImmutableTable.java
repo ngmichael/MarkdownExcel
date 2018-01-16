@@ -10,7 +10,12 @@ import java.util.stream.Stream;
  */
 public interface ImmutableTable {
 
+    String[] getHeader();
+    String[] getRow(int index);
+    String[] getColumn(int index);
+    String getCell(int row, int column);
+
     void writeToFile(String path);
-    Stream<Vector> valueStream();
+    String toString();
 
 }

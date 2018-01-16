@@ -76,7 +76,7 @@ public class MarkdownTableBuilder implements TableBuilder {
 
     @Override
     public TableBuilder fromImmutableTable(ImmutableTable table) {
-        values = new Cell[(int)table.valueStream().count()][0];
+        // values = new Cell[(int)table.valueStream().count()][0];
         return this;
     }
 

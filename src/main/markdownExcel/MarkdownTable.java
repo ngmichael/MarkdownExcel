@@ -3,6 +3,8 @@ package main.markdownExcel;
 import main.api.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 public final class MarkdownTable implements ImmutableTable {
@@ -21,6 +23,47 @@ public final class MarkdownTable implements ImmutableTable {
     }
 
     @Override
+    public String[] getHeader() {
+        Cell[] cells = headerRow.getValues();
+        String[] values = new String[cells.length];
+
+        for(int i = 0; i < cells.length; i++) {
+            values[i] = cells[i].getValue();
+        }
+        return values;
+    }
+
+    @Override
+    public String[] getRow(int index) {
+        Cell[] cells = this.values[index];
+        String[] values = new String[cells.length];
+
+        for(int i = 0; i < cells.length; i++) {
+            values[i] = cells[i].getValue();
+        }
+        return values;
+    }
+
+    @Override
+    public String[] getColumn(int index) {
+        List<Cell> cells = new ArrayList<>();
+        for (Cell[] row : values) {
+            cells.add(row[index]);
+        }
+        String[] values = new String[cells.size()];
+
+        for(int i = 0; i < cells.size(); i++) {
+            values[i] = cells.get(i).getValue();
+        }
+        return values;
+    }
+
+    @Override
+    public String getCell(int row, int column) {
+        return values[row][column].getValue();
+    }
+
+    @Override
     public void writeToFile(String path) {
         try {
             BufferedWriter w = new BufferedWriter(new FileWriter(new File(path)));
@@ -34,11 +77,6 @@ public final class MarkdownTable implements ImmutableTable {
             System.err.println("Could not write to file:");
             System.err.println(e.getLocalizedMessage());
         }
-    }
-
-    @Override
-    public Stream<Vector> valueStream() {
-        return null;
     }
 
     @Override
