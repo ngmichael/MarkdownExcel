@@ -14,7 +14,7 @@ import main.markdownExcel.MarkdownTable;
  * and then return the modified TableBuilder-Instance. These manipulations are
  * always performed on the same instance.
  *
- * @author Noah George Michael <noah.michael@mni.thm.de>
+ * @author Noah George Michael noah.michael@mni.thm.de
  * @since 20.12.2017
  * @see ImmutableTable
  * @see MarkdownTable
@@ -25,8 +25,8 @@ public interface TableBuilder {
     /**
      * Creates a new markdown table by parsing the content of the
      * supplied file.
-     *
-     * @implNote Any data stored in the table at method invocation is lost
+     * NOTE: Any data stored in the table at method invocation is lost
+     * 
      * @param s The path to the Markdown file
      * @return this table instance with the content of the supplied file
      */
@@ -46,7 +46,7 @@ public interface TableBuilder {
      * Creates a new markdown table by parsing the content of the
      * supplied immutable table.
      *
-     * @implNote Any data stored in the table at method invocation is lost
+     * NOTE:  Any data stored in the table at method invocation is lost
      * @param table an ImmutableTable
      * @return this table instance with the content of the supplied ImmutableTable
      */
@@ -83,6 +83,7 @@ public interface TableBuilder {
      *
      * @throws IndexOutOfBoundsException if the supplied index is out of bounds
      * @param index the index where the new row is to be inserted
+     * @param vec the values for pre-filling
      * @return The TableBuilder-Instance with the extra row and its supplied values
      */
     TableBuilder insertRow(int index, Vector vec) throws IndexOutOfBoundsException;
@@ -159,7 +160,7 @@ public interface TableBuilder {
     /**
      * Returns a row.
      *
-     * @apiNote This is a terminating operation, meaning that the vector has
+     * NOTE: This is a terminating operation, meaning that the vector has
      * no information about this table and thus can't reach it.
      * @param index the index of the row
      * @return a Vector-Instance containing the values of the row
@@ -170,7 +171,7 @@ public interface TableBuilder {
     /**
      * Returns a column.
      *
-     * @apiNote This is a terminating operation, meaning that the vector has
+     * NOTE: This is a terminating operation, meaning that the vector has
      * no information about this table and thus can't reach it.
      * @param index the index of the column
      * @return a Vector-Instance containing the values of the column
@@ -181,7 +182,7 @@ public interface TableBuilder {
     /**
      * Executes the VectorOperation op for the given row.
      *
-     * @implNote VectorOperation is a functional interface.
+     * NOTE: VectorOperation is a functional interface.
      * @param index the row on which the operation is to be executed
      * @param op the operation itself
      * @return The TableBuilder-Instance with one modified row
@@ -192,7 +193,7 @@ public interface TableBuilder {
     /**
      * Executes the VectorOperation op for the given column.
      *
-     * @implNote VectorOperation is a functional interface.
+     * NOTE: VectorOperation is a functional interface.
      * @param index the column on which the operation is to be executed
      * @param op the operation itself
      * @return The TableBuilder-Instance with one modified column
@@ -203,7 +204,7 @@ public interface TableBuilder {
     /**
      * Executes the VectorOperation op for all rows.
      *
-     * @implNote VectorOperation is a functional interface.
+     * NOTE: VectorOperation is a functional interface.
      * @param op the operation to be performed
      * @return The TableBuilder-Instance with modifications
      * @see VectorOperation
@@ -213,7 +214,7 @@ public interface TableBuilder {
     /**
      * Executes the VectorOperation op for all columns.
      *
-     * @implNote VectorOperation is a functional interface.
+     * NOTE: VectorOperation is a functional interface.
      * @param op the operation to be performed
      * @return The TableBuilder-Instance with modifications
      * @see VectorOperation
@@ -245,7 +246,7 @@ public interface TableBuilder {
     /**
      * Creates an ImmutableTable-Instance from this table builder
      * and returns it.
-     * @implNote This is a terminating operation. ImmutableTable has no
+     * NOTE: This is a terminating operation. ImmutableTable has no
      * direct access to this builder and can't modify its own values. A
      * new TableBuilder-Instance is needed if further modification is desired.
      * @return An ImmutableTable.

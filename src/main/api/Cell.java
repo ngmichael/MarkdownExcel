@@ -3,8 +3,9 @@ package main.api;
 /**
  * Describes a cell and its basic functionality for a MarkdownTable.
  *
- * @author Noah George Michael <noah.michael@mni.thm.de>
+ * @author Noah George Michael noah.michael@mni.thm.de
  * @since 19.12.2017
+ * @version 2
  */
 public interface Cell {
 

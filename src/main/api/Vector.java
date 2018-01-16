@@ -13,24 +13,10 @@ import java.util.OptionalDouble;
  * vector ("a subset of cells") and has to decide if he wants a vertical or
  * horizontal subset.
  *
- * The following operations are available:
- *
- *  Vector setValues(Cell... values);
- *  Cell[] getValues();
- *
- *  forSingleCell(CellOperation op);
- *  void forEachCell(CellOperation op);
- *
- *  OptionalDouble mean();
- *  OptionalDouble median();
- *  OptionalDouble sum();
- *
- *  int length();
- *
  *  @see CellOperation
  *  @see Cell
  *  @see OptionalDouble
- *  @author Noah George Michael <noah.michael@mni.thm.de>
+ *  @author Noah George Michael noah.michael@mni.thm.de
  *  @since 19.12.2017
  *  @version 2
  */
@@ -152,18 +138,20 @@ public interface Vector {
 
     /**
      * Finds the smallest numerical value in this vector and returns it.
+     * NOTE: If the Vector contains one or more non-numerical values, an
+     * empty optional is returned.
+     *
      * @return an Optional containing the smallest value
-     * @implNote If the Vector contains one or more non-numerical values, an
-     * empty optional is returned
      * @since Version 3
      */
     OptionalDouble min();
 
     /**
      * Finds the biggest numerical value in this vector and returns it.
-     * @return an Optional containing the biggest value
-     * @implNote If the Vector contains one or more non-numerical values, an
+     * NOTE: If the Vector contains one or more non-numerical values, an
      * empty optional is returned
+     *
+     * @return an Optional containing the biggest value
      * @since Version 3
      */
     OptionalDouble max();

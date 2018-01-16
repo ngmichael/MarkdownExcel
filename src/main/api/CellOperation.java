@@ -6,7 +6,7 @@ package main.api;
  * This Interface describes a single non-default method
  * for manipulating Cells of a Vector.
  *
- * @author Noah George Michael <noah.michael@mni.thm.de>
+ * @author Noah George Michael noah.michael@mni.thm.de
  * @since 21.12.2017
  */
 @FunctionalInterface
