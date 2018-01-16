@@ -168,4 +168,6 @@ public interface Vector {
      * @since Version 2
      */
     Iterator<Cell> iterator();
+
+    Vector clone();
 }

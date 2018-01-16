@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.OptionalDouble;
 
-public final class MarkdownVector implements Vector{
+public final class MarkdownVector implements Vector, Cloneable{
 
     private Cell[] values;
     private TableBuilder builder;
@@ -200,5 +200,25 @@ public final class MarkdownVector implements Vector{
                 return values[index++];
             }
         };
+    }
+
+    @Override
+    public Vector clone() {
+        MarkdownVector clone = null;
+
+        try {
+            clone = (MarkdownVector) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        assert clone != null;
+
+        List<Cell> newCells = new ArrayList<>(values.length);
+        for (Cell c : values) {
+            newCells.add(c.clone());
+        }
+        clone.values = newCells.toArray(values);
+        return clone;
     }
 }
