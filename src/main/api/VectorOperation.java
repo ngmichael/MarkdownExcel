@@ -1,13 +1,12 @@
 package main.api;
 
 /**
- *
+ * Functional Interface VectorOperation.
+ * This Interface describes a single non-default method for manipulating a Vector.
  */
 @FunctionalInterface
 public interface VectorOperation {
     /**
-     * Intended to be used with Lambda-Expressions.
-     *
      * This function takes three arguments.
      * The first one is an integer value which represents the row or
      * column index of this vector.
